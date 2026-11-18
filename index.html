@@ -187,14 +187,14 @@
   .drag-ghost svg{width:38px;height:27px;color:var(--accent)}
   .show-tablet{display:none!important}
   .show-mobile{display:none!important}
-  .drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.35);z-index:45}
+  .drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(15,23,42,.35);z-index:55}
   .drawer-backdrop.open{display:block}
   @media (max-width:1280px){.stage-bar .hide-sm{display:none}.stage-bar{gap:3px}}
   @media (max-width:1180px){.workbench{grid-template-columns:228px minmax(0,1fr) 262px}.brand-sub{display:none}}
   @media (max-width:1020px){
     .show-tablet{display:inline-flex!important}
     .workbench{grid-template-columns:224px minmax(0,1fr)}
-    .inspector{display:none;position:fixed;top:58px;right:0;bottom:0;width:min(300px,88vw);z-index:50;box-shadow:var(--shadow-md)}
+    .inspector{display:none;position:fixed;top:0;right:0;bottom:0;width:min(300px,88vw);z-index:60;box-shadow:var(--shadow-md)}
     .inspector.drawer-open{display:flex}
     #circuit-title{width:auto;min-width:0;max-width:220px;flex:1}
   }
@@ -207,7 +207,7 @@
     .save-state span:last-child{display:none}
     .top-actions .vdiv{margin:0 2px}
     .workbench{grid-template-columns:minmax(0,1fr)}
-    .palette{display:none;position:fixed;top:58px;left:0;bottom:0;width:min(260px,84vw);z-index:50;box-shadow:var(--shadow-md)}
+    .palette{display:none;position:fixed;top:0;left:0;bottom:0;width:min(260px,84vw);z-index:60;box-shadow:var(--shadow-md)}
     .palette.drawer-open{display:flex}
     .stage-bar{height:auto;flex-wrap:wrap;padding:5px 8px;gap:4px}
     .stage-bar .grow{display:none}
@@ -1037,7 +1037,7 @@ button,input,select,textarea{font-family:inherit}
 }
 @media (max-width:1020px){
   .workbench{grid-template-columns:232px minmax(0,1fr)}
-  .inspector{top:64px}
+  .inspector{top:0;z-index:60}
 }
 @media (max-width:980px){
   .asg-main{padding:40px 20px 80px}
@@ -1073,7 +1073,7 @@ button,input,select,textarea{font-family:inherit}
 }
 @media (max-width:760px){
   .topbar{height:64px;padding:0 8px;gap:8px}
-  .palette{top:64px}
+  .palette{top:0;z-index:60}
   .workbench{grid-template-columns:minmax(0,1fr)}
   .stage-bar{height:auto;padding:6px 8px;gap:6px}
   .statusbar .keys-hint{display:none}
@@ -1331,7 +1331,7 @@ button,input,select,textarea{font-family:inherit}
   </div>
 </div>
 
-<div class="asg-view" id="asg-view" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="asg-title">
+<div class="asg-view" id="asg-view" aria-hidden="true" hidden role="dialog" aria-modal="true" aria-labelledby="asg-title">
   <header class="asg-bar">
     <button class="asg-back" id="asg-back" title="Kembali ke editor (Esc)" aria-label="Kembali ke editor">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -1796,7 +1796,7 @@ const gateYs = (n) => {
 };
 const gateInputCount = (c) => (c.type === 'not' || c.type === 'buffer') ? 1 : clamp(+c.inputs || 2, 2, 4);
 const inputsOf = (c, inp) => {
-  if (c.type === 'not' || c.type === 'buffer') return !!inp.in1;
+  if (c.type === 'not' || c.type === 'buffer') return [!!inp.in1];
   const n = gateInputCount(c);
   const vals = [];
   for (let i = 1; i <= n; i++) vals.push(!!inp['in' + i]);
@@ -2177,9 +2177,25 @@ function routePoints(a, b) {
       pts.push({ x: routeX, y: p1.y }, { x: routeX, y: p2.y });
     }
   } else if (ha) {
-    pts.push({ x: p2.x, y: p1.y });
+    if ((p2.x - p1.x) * a.nx < 0) {
+      const midY = (p1.y + p2.y) / 2;
+      pts.push({ x: p1.x, y: midY }, { x: p2.x, y: midY });
+    } else if ((p1.y - p2.y) * b.ny < 0) {
+      const midX = (p1.x + p2.x) / 2;
+      pts.push({ x: midX, y: p1.y }, { x: midX, y: p2.y });
+    } else {
+      pts.push({ x: p2.x, y: p1.y });
+    }
   } else {
-    pts.push({ x: p1.x, y: p2.y });
+    if ((p2.y - p1.y) * a.ny < 0) {
+      const midX = (p1.x + p2.x) / 2;
+      pts.push({ x: midX, y: p1.y }, { x: midX, y: p2.y });
+    } else if ((p1.x - p2.x) * b.nx < 0) {
+      const midY = (p1.y + p2.y) / 2;
+      pts.push({ x: p1.x, y: midY }, { x: p2.x, y: midY });
+    } else {
+      pts.push({ x: p1.x, y: p2.y });
+    }
   }
   pts.push(p2, { x: b.x, y: b.y });
   return cleanPoints(pts);
@@ -2424,7 +2440,7 @@ function rotateSelection() {
 }
 function pruneRemovedPorts(c) {
   if (!DEFS[c.type]?.hasInputs) return;
-  const valid = new Set(DEFS[c.type].ports(c).filter((p) => p.dir === 'in').map((p) => p.id));
+  const valid = new Set(DEFS[c.type].ports(c).map((p) => p.id));
   S.wires = S.wires.filter((w) => !(w.to.c === c.id && !valid.has(w.to.p)) && !(w.from.c === c.id && !valid.has(w.from.p)));
 }
 function updateTitleFromInput() {
@@ -2787,6 +2803,7 @@ function importFile(file) {
 /* ------------------------------------------------------------------ */
 function toast(message, kind = 'ok') {
   const box = $('#toasts');
+  while (box.children.length >= 2) box.firstElementChild.remove();
   const el = document.createElement('div');
   el.className = 'toast ' + (kind === 'warn' ? 'warn' : kind === 'err' ? 'err' : '');
   el.innerHTML = `${icon(kind === 'ok' ? 'check' : kind === 'warn' ? 'alert' : 'info', 14)}<span>${esc(message)}</span>`;
@@ -3976,6 +3993,7 @@ init();
 
   const appEl = q('.app');
   function openAssign(tab = 'counter') {
+    view.hidden = false;
     view.classList.add('open');
     view.setAttribute('aria-hidden', 'false');
     document.body.classList.add('assign-open');
@@ -3989,6 +4007,7 @@ init();
     stopLiftAuto();
     view.classList.remove('open');
     view.setAttribute('aria-hidden', 'true');
+    view.hidden = true;
     document.body.classList.remove('assign-open');
     if (appEl) appEl.inert = false;
     q('#btn-assign').setAttribute('aria-expanded', 'false');
