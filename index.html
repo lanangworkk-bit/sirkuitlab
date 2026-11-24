@@ -1184,7 +1184,51 @@ button,input,select,textarea{font-family:inherit}
 #asg-maker-slot .workbench{flex:1;min-height:0}
 .asg-maker-shell .palette.drawer-open,.asg-maker-shell .inspector.drawer-open{z-index:175}
 .asg-maker-shell .drawer-backdrop{z-index:170}
+/* Panduan Pengertian Per Tahap (Sirkuit Maker & Skema Tugas) */
+.asg-guide{background:#fff;border:1px solid var(--line2);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.asg-guide-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.asg-guide-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.asg-guide-pills{display:flex;gap:6px;flex-wrap:wrap}
+.asg-step-pill{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 12px;
+  border:1px solid var(--line);border-radius:999px;background:var(--surface);
+  font-size:11px;font-weight:600;color:var(--ink2);transition:.13s;
+}
+.asg-step-pill .st-n{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--faint)}
+.asg-step-pill:hover{border-color:var(--ink);color:var(--ink)}
+.asg-step-pill.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.asg-step-pill.active .st-n{color:var(--lime)}
+.asg-guide-box{
+  margin-top:12px;padding:13px 15px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--line);
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px;align-items:start;
+}
+.asg-guide-main h3{margin:0 0 4px;font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-.015em}
+.asg-guide-main p{margin:0;font-size:12.5px;line-height:1.6;color:var(--ink2)}
+.asg-guide-main .asg-guide-detail{margin-top:6px;font-size:11.5px;color:var(--muted)}
+.asg-guide-tip{
+  padding:11px 13px;border-radius:9px;background:var(--ink);color:#e4e4e7;
+  font-size:11.5px;line-height:1.55;border:1px solid var(--line2);
+}
+.asg-guide-tip b{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);margin-bottom:4px}
+.asg-sch-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px;
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+}
+.asg-sch-step{
+  text-align:left;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface);transition:.13s;display:flex;flex-direction:column;gap:4px;
+}
+.asg-sch-step .st-num{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.asg-sch-step .st-t{font-size:12px;font-weight:700;color:var(--ink);line-height:1.25}
+.asg-sch-step .st-d{font-size:11px;line-height:1.5;color:var(--muted)}
+.asg-sch-step:hover{border-color:var(--ink);background:#fff}
+.asg-sch-step.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.asg-sch-step.active .st-num{color:var(--lime)}
+.asg-sch-step.active .st-t{color:#fff}
+.asg-sch-step.active .st-d{color:#d4d4d8}
 @media (max-width:760px){
+  .asg-guide-box{grid-template-columns:1fr}
   .asg-circuit-stage{height:360px}
   .asg-circuit-stage.tall{height:420px}
   .asg-maker-shell{height:calc(100dvh - 120px);min-height:480px}
@@ -1515,8 +1559,9 @@ button,input,select,textarea{font-family:inherit}
         <div class="asg-circuit-stage" id="ac-sch-stage"></div>
         <div class="asg-circuit-foot">
           <div class="asg-circuit-meta" id="ac-sch-meta"><span class="asg-circuit-badge"><i></i>Skema sinkron aktif</span></div>
-          <span>Seret untuk menggeser · Scroll untuk zoom · Klik Clock pada skema untuk melangkah</span>
+          <span>Seret untuk menggeser · Scroll untuk zoom · Klik Clock atau kartu tahap di bawah untuk sorot komponen</span>
         </div>
+        <div class="asg-sch-steps" id="ac-sch-steps" aria-label="Pengertian setiap tahap rangkaian Soal 2"></div>
       </div>
 
       <div class="asg-card" style="margin-top:16px">
@@ -1627,8 +1672,9 @@ button,input,select,textarea{font-family:inherit}
         <div class="asg-circuit-stage tall" id="al-sch-stage"></div>
         <div class="asg-circuit-foot">
           <div class="asg-circuit-meta" id="al-sch-meta"><span class="asg-circuit-badge"><i></i>Skema lift aktif</span></div>
-          <span>Seret untuk menggeser · Scroll untuk zoom · Klik saklar X, P, atau Clock langsung pada skema</span>
+          <span>Seret untuk menggeser · Scroll untuk zoom · Klik saklar X, P, Clock, atau kartu tahap di bawah</span>
         </div>
+        <div class="asg-sch-steps" id="al-sch-steps" aria-label="Pengertian setiap tahap rangkaian Soal 3"></div>
       </div>
 
       <div class="asg-card" style="margin-top:16px">
@@ -1678,6 +1724,21 @@ button,input,select,textarea{font-family:inherit}
           <button class="asg-btn" data-maker-preset="half">Half Adder</button>
           <button class="asg-btn" data-maker-preset="empty">Kanvas Kosong</button>
         </div>
+      </div>
+      <div class="asg-guide" id="asg-maker-guide" aria-label="Panduan pengertian per tahap Sirkuit Maker">
+        <div class="asg-guide-top">
+          <div class="asg-guide-title">
+            <span class="asg-circuit-badge"><i></i><span id="asg-guide-heading">Panduan Per Tahap</span></span>
+            <span style="font-size:11.5px;color:var(--muted)" id="asg-guide-sub">Klik salah satu tahap untuk melihat pengertian dan menyorot komponennya di kanvas.</span>
+          </div>
+          <div class="asg-circuit-tools">
+            <button class="asg-mini-btn" id="asg-guide-prev" title="Tahap sebelumnya">← Sebelumnya</button>
+            <button class="asg-mini-btn primary" id="asg-guide-next" title="Tahap berikutnya">Berikutnya →</button>
+            <button class="asg-mini-btn" id="asg-guide-all" title="Tampilkan seluruh rangkaian">Tampilkan Semua</button>
+          </div>
+        </div>
+        <div class="asg-guide-pills" id="asg-guide-pills"></div>
+        <div class="asg-guide-box" id="asg-guide-box"></div>
       </div>
       <div class="asg-maker-shell" id="asg-maker-shell">
         <div class="asg-maker-bar">
@@ -1850,6 +1911,8 @@ const CIRCUIT_CSS = `
 .mux-ch{fill:none}
 .mux-ch.active{fill:#ecfdf5;stroke:#10b981;stroke-width:1.2}
 .pin-label.active{fill:#047857}
+.comp.spotlight .selbox{display:block;stroke:#2563eb;stroke-width:2.4;stroke-dasharray:none;fill:rgba(37,99,235,.06)}
+.comp.dimmed{opacity:.35}
 `;
 const styleEl = document.createElement('style');
 styleEl.id = 'circuit-style';
@@ -2188,6 +2251,7 @@ const PALETTE = [
 /* ------------------------------------------------------------------ */
 const S = {
   title: 'Rangkaian Tanpa Judul',
+  templateKey: 'half',
   components: [], wires: [], selection: new Set(),
   view: { x: 60, y: 40, zoom: 1 },
   tool: 'select', grid: true, showValues: true,
@@ -2599,7 +2663,9 @@ function makeComponent(type, x, y, props = {}) {
   const c = {
     id: uid('c'), type, x: snap(x), y: snap(y), rot: props.rot || 0,
     label: props.label !== undefined ? String(props.label) : autoLabel(type),
-    on: !!props.on, q: props.q ? 1 : 0, initQ: props.initQ ? 1 : 0
+    on: !!props.on, q: props.q ? 1 : 0, initQ: props.initQ ? 1 : 0,
+    _key: props._key ? String(props._key) : '',
+    note: props.note ? String(props.note) : ''
   };
   if (def.hasInputs) c.inputs = clamp(+props.inputs || def.defaultInputs || 2, 2, 4);
   return c;
@@ -2689,25 +2755,25 @@ function buildCounter11Spec() {
     title: 'Soal 2 — Counter Modulo-11 (4× JK FF)',
     components: {
       NOTE: { type: 'label', x: 40, y: 20, label: 'SOAL 2 · Counter Modulo-11 (4× JK FF + 8 Gerbang)' },
-      CLK: { type: 'clock', x: 40, y: 400, label: 'CLK' },
-      VCC: { type: 'const1', x: 580, y: 580, label: 'VCC (KC=1)' },
-      G_T: { type: 'and', x: 280, y: 180, label: 't = C·D' },
-      G_N: { type: 'nor', x: 280, y: 280, label: "n = C'·D'" },
-      G_JA: { type: 'and', x: 440, y: 160, label: 'JA = B·t' },
-      G_AN: { type: 'and', x: 440, y: 280, label: 'A·n' },
-      G_JB: { type: 'or', x: 580, y: 260, label: 'JB = t+A·n' },
-      G_KB: { type: 'or', x: 440, y: 400, label: 'KB = t+n' },
-      G_JC: { type: 'or', x: 440, y: 500, inputs: 3, label: 'JC = A+B+D' },
-      G_JD: { type: 'nor', x: 440, y: 620, inputs: 3, label: "JD = A'B'C'" },
-      FFA: { type: 'jkff', x: 760, y: 160, label: 'FF A (Q3)', q: 0 },
-      FFB: { type: 'jkff', x: 760, y: 320, label: 'FF B (Q2)', q: 0 },
-      FFC: { type: 'jkff', x: 760, y: 480, label: 'FF C (Q1)', q: 0 },
-      FFD: { type: 'jkff', x: 760, y: 640, label: 'FF D (Q0)', q: 0 },
-      LED_A: { type: 'led', x: 980, y: 160, label: 'A (8)' },
-      LED_B: { type: 'led', x: 980, y: 320, label: 'B (4)' },
-      LED_C: { type: 'led', x: 980, y: 480, label: 'C (2)' },
-      LED_D: { type: 'led', x: 980, y: 640, label: 'D (1)' },
-      SEG: { type: 'sevenseg', x: 1120, y: 360, label: 'Hex 0–A' }
+      CLK: { type: 'clock', x: 40, y: 400, label: 'CLK', note: 'Sumber pulsa clock bersama; semua 4 flip-flop JK berubah serempak pada tepi naik clock (sinkron).' },
+      VCC: { type: 'const1', x: 580, y: 580, label: 'VCC (KC=1)', note: 'Menyuplai logika tetap 1 ke pin KC agar flip-flop C selalu reset atau toggle saat JC aktif.' },
+      G_T: { type: 'and', x: 280, y: 180, label: 't = C·D', note: 'Suku bersama t = C·D: bernilai 1 saat kedua bit rendah C dan D bernilai 1, dipakai bersama oleh JA, JB, dan KB.' },
+      G_N: { type: 'nor', x: 280, y: 280, label: "n = C'·D'", note: "Suku bersama n = (C+D)' = C'·D': bernilai 1 saat C=0 dan D=0, dipakai oleh KA, JB, dan KB." },
+      G_JA: { type: 'and', x: 440, y: 160, label: 'JA = B·t', note: 'Menghitung masukan JA = B·C·D untuk men-set bit MSB A pada transisi naik menuju keadaan 8/9.' },
+      G_AN: { type: 'and', x: 440, y: 280, label: 'A·n', note: 'Suku pembantu A·C′·D′ untuk masukan JB agar bit B ikut berubah saat fase turun dari keadaan 8.' },
+      G_JB: { type: 'or', x: 580, y: 260, label: 'JB = t+A·n', note: 'Menghasilkan masukan JB = C·D + A·C′·D′ ke flip-flop B.' },
+      G_KB: { type: 'or', x: 440, y: 400, label: 'KB = t+n', note: 'Menghasilkan KB = C·D + C′·D′ (setara XNOR(C,D)) untuk mereset atau toggle bit B.' },
+      G_JC: { type: 'or', x: 440, y: 500, inputs: 3, label: 'JC = A+B+D', note: 'Menghasilkan JC = A + B + D agar bit C siap berubah pada transisi ganjil naik maupun genap turun.' },
+      G_JD: { type: 'nor', x: 440, y: 620, inputs: 3, label: "JD = A'B'C'", note: 'Menghasilkan JD = A′·B′·C′ untuk men-set bit D hanya saat keadaan 0000 (0 → 1).' },
+      FFA: { type: 'jkff', x: 760, y: 160, label: 'FF A (Q3)', q: 0, note: 'Flip-flop JK bit MSB A (bobot 8). Keluaran Q diumpankan kembali ke gerbang logika dan display.' },
+      FFB: { type: 'jkff', x: 760, y: 320, label: 'FF B (Q2)', q: 0, note: 'Flip-flop JK bit B (bobot 4) dengan masukan JB dan KB dari hasil K-map.' },
+      FFC: { type: 'jkff', x: 760, y: 480, label: 'FF C (Q1)', q: 0, note: 'Flip-flop JK bit C (bobot 2) dengan JC = A+B+D dan KC = 1 (VCC).' },
+      FFD: { type: 'jkff', x: 760, y: 640, label: 'FF D (Q0)', q: 0, note: 'Flip-flop JK bit LSB D (bobot 1) dengan JD = A′B′C′ dan KD langsung dari Q_A.' },
+      LED_A: { type: 'led', x: 980, y: 160, label: 'A (8)', note: 'Indikator LED untuk bit A (MSB, nilai 8).' },
+      LED_B: { type: 'led', x: 980, y: 320, label: 'B (4)', note: 'Indikator LED untuk bit B (nilai 4).' },
+      LED_C: { type: 'led', x: 980, y: 480, label: 'C (2)', note: 'Indikator LED untuk bit C (nilai 2).' },
+      LED_D: { type: 'led', x: 980, y: 640, label: 'D (1)', note: 'Indikator LED untuk bit D (LSB, nilai 1).' },
+      SEG: { type: 'sevenseg', x: 1120, y: 360, label: 'Hex 0–A', note: 'Display 7-segmen yang membaca biner A B C D menjadi angka heksadesimal 0–A (0–10).' }
     },
     wires: [
       ['FFC.q', 'G_T.in1', fb.FFC], ['FFD.q', 'G_T.in2', fb.FFD],
@@ -2764,68 +2830,68 @@ function buildLift15Spec() {
       LBL_MUX: { type: 'label', x: 1040, y: 180, label: 'Tahap 3 · 4× MUX 4:1 (S1=X, S0=P)' },
       LBL_FF: { type: 'label', x: 1300, y: 180, label: 'Tahap 4 · Register Lantai (4× D FF)' },
 
-      SW_X: { type: 'switch', x: 40, y: 240, label: 'X (1=Naik)', on: true },
-      SW_P: { type: 'switch', x: 40, y: 340, label: 'P (1=3 Lantai)', on: false },
-      CLK: { type: 'clock', x: 40, y: 440, label: 'CLK 1 Hz' },
+      SW_X: { type: 'switch', x: 40, y: 240, label: 'X (1=Naik)', on: true, note: 'Saklar arah X (selektor S1 pada MUX 4:1): 1 = lift bergerak naik, 0 = lift bergerak turun.' },
+      SW_P: { type: 'switch', x: 40, y: 340, label: 'P (1=3 Lantai)', on: false, note: 'Saklar pemercepat P (selektor S0 pada MUX 4:1): 0 = pindah 1 lantai/detik, 1 = pindah 3 lantai/detik.' },
+      CLK: { type: 'clock', x: 40, y: 440, label: 'CLK 1 Hz', note: 'Sumber clock 1 Hz: setiap satu pulsa tepi naik memindahkan lift ke lantai berikutnya dari keluaran MUX.' },
 
-      G_AB: { type: 'and', x: 300, y: 220, label: 'A·B' },
-      G_ORAB: { type: 'or', x: 300, y: 300, label: 'A+B' },
-      G_NORAB: { type: 'nor', x: 300, y: 380, label: "A'B'" },
-      G_CD: { type: 'and', x: 300, y: 480, label: 'C·D' },
-      G_NCD: { type: 'nand', x: 300, y: 560, label: "(C·D)'" },
-      G_CORD: { type: 'or', x: 300, y: 640, label: 'C+D' },
-      G_CXOR: { type: 'xor', x: 300, y: 740, label: 'C⊕D' },
-      G_CXNOR: { type: 'xnor', x: 300, y: 840, label: 'C⊙D' },
+      G_AB: { type: 'and', x: 300, y: 220, label: 'A·B', note: 'Suku bersama A·B (bernilai 1 untuk lantai 12–15), dipakai bersama oleh blok Turun 3, Naik 1, dan Naik 3.' },
+      G_ORAB: { type: 'or', x: 300, y: 300, label: 'A+B', note: 'Suku bersama A+B (lantai ≥ 4), dipakai pada perhitungan bit C mode Turun 3.' },
+      G_NORAB: { type: 'nor', x: 300, y: 380, label: "A'B'", note: "Suku bersama A'·B' (lantai 1–3), dipakai bersama oleh blok Turun 3 dan Naik 3." },
+      G_CD: { type: 'and', x: 300, y: 480, label: 'C·D', note: 'Suku bersama C·D (dua bit rendah = 11), dipakai pada mode Turun 3 dan Naik 1.' },
+      G_NCD: { type: 'nand', x: 300, y: 560, label: "(C·D)'", note: "Suku bersama (C·D)', dipakai untuk menghindari penyebaran carry/borrow berlebih pada bit B." },
+      G_CORD: { type: 'or', x: 300, y: 640, label: 'C+D', note: 'Suku bersama C+D, dipakai bersama oleh mode Turun 1 dan Naik 3.' },
+      G_CXOR: { type: 'xor', x: 300, y: 740, label: 'C⊕D', note: 'Suku bersama C⊕D (paritas ganjil dua bit bawah), dipakai di mode Turun 3 dan Naik 1.' },
+      G_CXNOR: { type: 'xnor', x: 300, y: 840, label: 'C⊙D', note: 'Suku bersama C⊙D: menjadi keluaran langsung DC untuk mode Turun 1 (I0) dan pembentuk Naik 3.' },
 
-      G_BCD: { type: 'and', x: 460, y: 480, label: 'B·C·D' },
-      U1_B1: { type: 'or', x: 460, y: 560, label: "A+(CD)'" },
-      G_B_CD: { type: 'and', x: 460, y: 640, label: 'B(C+D)' },
+      G_BCD: { type: 'and', x: 460, y: 480, label: 'B·C·D', note: 'Suku bersama B·C·D, menandakan 3 bit bawah penuh (x111) untuk carry ke bit A atau B.' },
+      U1_B1: { type: 'or', x: 460, y: 560, label: "A+(CD)'", note: "Suku pembantu A + (C·D)' untuk mode Naik 1 pada bit B." },
+      G_B_CD: { type: 'and', x: 460, y: 640, label: 'B(C+D)', note: 'Suku bersama B(C+D) = BC + BD, dipakai pada Turun 1 (DB) dan Naik 3 (DA).' },
 
-      D1_A1: { type: 'or', x: 640, y: 220, label: 'B+C+D' },
-      D1_A: { type: 'and', x: 800, y: 220, label: 'T1·DA' },
-      D1_B1: { type: 'nor', x: 640, y: 300, inputs: 3, label: "B'C'D'" },
-      D1_B: { type: 'or', x: 800, y: 300, label: 'T1·DB' },
-      D1_D1: { type: 'nor', x: 640, y: 380, inputs: 3, label: "A'B'C'" },
-      D1_D: { type: 'or', x: 800, y: 380, label: 'T1·DD' },
+      D1_A1: { type: 'or', x: 640, y: 220, label: 'B+C+D', note: 'Gerbang pembantu B+C+D untuk mode Turun 1 bit A.' },
+      D1_A: { type: 'and', x: 800, y: 220, label: 'T1·DA', note: 'Keluaran mode Turun 1 untuk DA (I0 pada MUX A): A(B+C+D) = AB+AC+AD.' },
+      D1_B1: { type: 'nor', x: 640, y: 300, inputs: 3, label: "B'C'D'", note: 'Gerbang NOR untuk mendeteksi borrow ke bit B saat turun 1.' },
+      D1_B: { type: 'or', x: 800, y: 300, label: 'T1·DB', note: 'Keluaran mode Turun 1 untuk DB (I0 pada MUX B): BC+BD+B′C′D′.' },
+      D1_D1: { type: 'nor', x: 640, y: 380, inputs: 3, label: "A'B'C'", note: 'Penahan batas bawah lantai 1 (0001) agar saat turun 1 tetap di lantai 1.' },
+      D1_D: { type: 'or', x: 800, y: 380, label: 'T1·DD', note: 'Keluaran mode Turun 1 untuk DD (I0 pada MUX D): D′ + A′B′C′.' },
 
-      D3_A1: { type: 'and', x: 640, y: 480, label: 'A·C·D' },
-      D3_A: { type: 'or', x: 800, y: 480, label: 'T3·DA' },
-      D3_B1: { type: 'and', x: 640, y: 560, inputs: 3, label: "AB'(CD)'" },
-      D3_B: { type: 'or', x: 800, y: 560, label: 'T3·DB' },
-      D3_C: { type: 'and', x: 800, y: 640, label: 'T3·DC' },
-      D3_D: { type: 'or', x: 800, y: 720, label: 'T3·DD' },
+      D3_A1: { type: 'and', x: 640, y: 480, label: 'A·C·D', note: 'Suku A·C·D untuk menentukan bit A tetap 1 saat turun 3 dari lantai 11.' },
+      D3_A: { type: 'or', x: 800, y: 480, label: 'T3·DA', note: 'Keluaran mode Turun 3 untuk DA (I1 pada MUX A): AB + ACD.' },
+      D3_B1: { type: 'and', x: 640, y: 560, inputs: 3, label: "AB'(CD)'", note: 'Suku AB′(CD)′ saat turun 3 meminjam dari bit A ke B.' },
+      D3_B: { type: 'or', x: 800, y: 560, label: 'T3·DB', note: 'Keluaran mode Turun 3 untuk DB (I1 pada MUX B): BCD + AB′C′ + AB′D′.' },
+      D3_C: { type: 'and', x: 800, y: 640, label: 'T3·DC', note: 'Keluaran mode Turun 3 untuk DC (I1 pada MUX C): (A+B)(C⊕D).' },
+      D3_D: { type: 'or', x: 800, y: 720, label: 'T3·DD', note: 'Keluaran mode Turun 3 untuk DD (I1 pada MUX D): D′ + A′B′ (dibatasi di lantai 1).' },
 
-      U1_A: { type: 'or', x: 800, y: 800, label: 'N1·DA' },
-      U1_B2: { type: 'and', x: 640, y: 880, label: "B(A+(CD)')" },
-      U1_B3: { type: 'and', x: 640, y: 960, label: "B'·C·D" },
-      U1_B: { type: 'or', x: 800, y: 900, label: 'N1·DB' },
-      U1_C1: { type: 'and', x: 640, y: 1040, label: 'A·B·D' },
-      U1_C: { type: 'or', x: 800, y: 1040, label: 'N1·DC' },
-      U1_D1: { type: 'and', x: 640, y: 1120, label: 'A·B·C' },
-      U1_D: { type: 'or', x: 800, y: 1120, label: 'N1·DD' },
+      U1_A: { type: 'or', x: 800, y: 800, label: 'N1·DA', note: 'Keluaran mode Naik 1 untuk DA (I2 pada MUX A): A + BCD.' },
+      U1_B2: { type: 'and', x: 640, y: 880, label: "B(A+(CD)')", note: 'Suku B(A + (CD)′) untuk mempertahankan B atau batas lantai 15.' },
+      U1_B3: { type: 'and', x: 640, y: 960, label: "B'·C·D", note: 'Suku B′·C·D untuk menaikkan bit B saat C=1 dan D=1.' },
+      U1_B: { type: 'or', x: 800, y: 900, label: 'N1·DB', note: 'Keluaran mode Naik 1 untuk DB (I2 pada MUX B): AB + BC′ + BD′ + B′CD.' },
+      U1_C1: { type: 'and', x: 640, y: 1040, label: 'A·B·D', note: 'Suku penahan bit C pada batas atas lantai 14–15.' },
+      U1_C: { type: 'or', x: 800, y: 1040, label: 'N1·DC', note: 'Keluaran mode Naik 1 untuk DC (I2 pada MUX C): (C⊕D) + ABD.' },
+      U1_D1: { type: 'and', x: 640, y: 1120, label: 'A·B·C', note: 'Suku penahan lantai 15 (1111) agar tidak melampaui batas atas.' },
+      U1_D: { type: 'or', x: 800, y: 1120, label: 'N1·DD', note: 'Keluaran mode Naik 1 untuk DD (I2 pada MUX D): D′ + ABC.' },
 
-      U3_A: { type: 'or', x: 800, y: 1200, label: 'N3·DA' },
-      U3_B1: { type: 'and', x: 640, y: 1280, label: 'A(C+D)' },
-      U3_B2: { type: 'and', x: 640, y: 1360, inputs: 3, label: "B·C'·D'" },
-      U3_B: { type: 'or', x: 800, y: 1300, inputs: 3, label: 'N3·DB' },
-      U3_C: { type: 'or', x: 800, y: 1380, label: 'N3·DC' },
-      U3_D: { type: 'or', x: 800, y: 1460, label: 'N3·DD' },
+      U3_A: { type: 'or', x: 800, y: 1200, label: 'N3·DA', note: 'Keluaran mode Naik 3 untuk DA (I3 pada MUX A): A + BC + BD.' },
+      U3_B1: { type: 'and', x: 640, y: 1280, label: 'A(C+D)', note: 'Suku batas atas lantai 13–15 pada bit B saat naik 3.' },
+      U3_B2: { type: 'and', x: 640, y: 1360, inputs: 3, label: "B·C'·D'", note: 'Suku BC′D′ untuk mempertahankan bit B saat naik 3.' },
+      U3_B: { type: 'or', x: 800, y: 1300, inputs: 3, label: 'N3·DB', note: 'Keluaran mode Naik 3 untuk DB (I3 pada MUX B): AC + AD + A′B′ + BC′D′.' },
+      U3_C: { type: 'or', x: 800, y: 1380, label: 'N3·DC', note: 'Keluaran mode Naik 3 untuk DC (I3 pada MUX C): AB + CD + C′D′.' },
+      U3_D: { type: 'or', x: 800, y: 1460, label: 'N3·DD', note: 'Keluaran mode Naik 3 untuk DD (I3 pada MUX D): D′ + AB.' },
 
-      MUX_A: { type: 'mux4', x: 1080, y: 240, label: 'MUX A' },
-      MUX_B: { type: 'mux4', x: 1080, y: 460, label: 'MUX B' },
-      MUX_C: { type: 'mux4', x: 1080, y: 680, label: 'MUX C' },
-      MUX_D: { type: 'mux4', x: 1080, y: 900, label: 'MUX D' },
+      MUX_A: { type: 'mux4', x: 1080, y: 240, label: 'MUX A', note: 'Multiplexer 4:1 untuk bit A: memilih T1·DA (I0), T3·DA (I1), N1·DA (I2), atau N3·DA (I3) sesuai X dan P.' },
+      MUX_B: { type: 'mux4', x: 1080, y: 460, label: 'MUX B', note: 'Multiplexer 4:1 untuk bit B: memilih keluaran DB dari salah satu dari 4 blok mode.' },
+      MUX_C: { type: 'mux4', x: 1080, y: 680, label: 'MUX C', note: 'Multiplexer 4:1 untuk bit C: memilih keluaran DC dari 4 mode (I0 langsung dari C⊙D).' },
+      MUX_D: { type: 'mux4', x: 1080, y: 900, label: 'MUX D', note: 'Multiplexer 4:1 untuk bit D: memilih keluaran DD dari salah satu dari 4 blok mode.' },
 
-      FFA: { type: 'dff', x: 1300, y: 260, label: 'FF A (Q3)', q: 0, initQ: 0 },
-      FFB: { type: 'dff', x: 1300, y: 480, label: 'FF B (Q2)', q: 0, initQ: 0 },
-      FFC: { type: 'dff', x: 1300, y: 700, label: 'FF C (Q1)', q: 0, initQ: 0 },
-      FFD: { type: 'dff', x: 1300, y: 920, label: 'FF D (Q0)', q: 1, initQ: 1 },
+      FFA: { type: 'dff', x: 1300, y: 260, label: 'FF A (Q3)', q: 0, initQ: 0, note: 'Flip-flop D penyimpan bit MSB lantai (bobot 8). Nilai awal reset = 0.' },
+      FFB: { type: 'dff', x: 1300, y: 480, label: 'FF B (Q2)', q: 0, initQ: 0, note: 'Flip-flop D penyimpan bit B lantai (bobot 4). Nilai awal reset = 0.' },
+      FFC: { type: 'dff', x: 1300, y: 700, label: 'FF C (Q1)', q: 0, initQ: 0, note: 'Flip-flop D penyimpan bit C lantai (bobot 2). Nilai awal reset = 0.' },
+      FFD: { type: 'dff', x: 1300, y: 920, label: 'FF D (Q0)', q: 1, initQ: 1, note: 'Flip-flop D penyimpan bit LSB lantai (bobot 1). Nilai awal reset = 1 sehingga lantai awal = 0001 (1).' },
 
-      LED_A: { type: 'led', x: 1560, y: 260, label: 'A (8)' },
-      LED_B: { type: 'led', x: 1560, y: 480, label: 'B (4)' },
-      LED_C: { type: 'led', x: 1560, y: 700, label: 'C (2)' },
-      LED_D: { type: 'led', x: 1560, y: 920, label: 'D (1)' },
-      SEG: { type: 'sevenseg', x: 1700, y: 520, label: 'Lantai 1–F' }
+      LED_A: { type: 'led', x: 1560, y: 260, label: 'A (8)', note: 'Indikator biner bit A (nilai 8) nomor lantai.' },
+      LED_B: { type: 'led', x: 1560, y: 480, label: 'B (4)', note: 'Indikator biner bit B (nilai 4) nomor lantai.' },
+      LED_C: { type: 'led', x: 1560, y: 700, label: 'C (2)', note: 'Indikator biner bit C (nilai 2) nomor lantai.' },
+      LED_D: { type: 'led', x: 1560, y: 920, label: 'D (1)', note: 'Indikator biner bit D (nilai 1) nomor lantai.' },
+      SEG: { type: 'sevenseg', x: 1700, y: 520, label: 'Lantai 1–F', note: 'Display 7-segmen penampil lantai 1–15 (1–F dalam heksadesimal).' }
     },
     wires: [
       ['FFA.q', 'G_AB.in1', s1.A], ['FFB.q', 'G_AB.in2', s1.B],
@@ -2943,6 +3009,167 @@ const TEMPLATES = {
   lift15: buildLift15Spec(),
   empty: { title: 'Rangkaian Tanpa Judul', components: {}, wires: [] }
 };
+
+const CIRCUIT_GUIDES = {
+  counter11: {
+    title: 'Panduan Tahap Demi Tahap · Soal 2 (Counter Modulo-11)',
+    steps: [
+      {
+        title: 'Clock & VCC',
+        keys: ['CLK', 'VCC'],
+        summary: 'Semua flip-flop dipicu serempak oleh satu clock (sinkron), sementara KC diberi logika tetap 1 (VCC).',
+        detail: 'Karena sinkron, perubahan bit terjadi bersamaan pada tepi naik clock sehingga tidak ada penundaan merambat (ripple) ataupun glitch.',
+        tip: 'Jelaskan bahwa 1 garis clock di bawah terhubung ke keempat pin CLK sekaligus, dan KC = 1 disuplai langsung oleh VCC.'
+      },
+      {
+        title: 'Suku Bersama (t & n)',
+        keys: ['G_T', 'G_N'],
+        summary: 'Suku t = C·D (AND) dan n = C′·D′ (NOR) dihitung sekali saja lalu dipakai ulang oleh banyak persamaan J/K.',
+        detail: 'Berbagi gerbang menghemat komponen: t dipakai oleh JA, JB, dan KB; sedangkan n dipakai oleh KA, JB, dan KB.',
+        tip: 'Tunjuk dua gerbang di kolom kiri ini sebagai contoh efisiensi penyederhanaan K-map sebelum masuk ke input flip-flop.'
+      },
+      {
+        title: 'Logika Eksitasi JK',
+        keys: ['G_JA', 'G_AN', 'G_JB', 'G_KB', 'G_JC', 'G_JD'],
+        summary: 'Enam gerbang ini menghitung sinyal J dan K tiap flip-flop dari keadaan Q sekarang sesuai hasil K-map Bagian 2.4.',
+        detail: 'JA = B·t, JB = t + A·n, KB = t + n, JC = A+B+D, JD = NOR(A,B,C). Sementara KA = n dan KD = Q_A langsung lewat kabel.',
+        tip: 'Tekan tombol Langkah di kanvas: warna hijau menunjukkan gerbang mana saja yang aktif (= 1) menyiapkan transisi berikutnya.'
+      },
+      {
+        title: 'Register 4× JK FF',
+        keys: ['FFA', 'FFB', 'FFC', 'FFD'],
+        summary: 'Empat flip-flop JK menyimpan 4 bit keadaan sekarang (A = MSB/8, B = 4, C = 2, D = LSB/1).',
+        detail: 'Pada setiap tepi naik clock, tiap JK FF mengevaluasi J dan K (Tahan, Reset, Set, atau Toggle) menghasilkan siklus ganjil naik lalu genap turun.',
+        tip: 'Sebutkan urutan siklusnya: 1 → 3 → 5 → 7 → 9 → 10 → 8 → 6 → 4 → 2 → 0 → 1 (total 11 keadaan).'
+      },
+      {
+        title: 'Keluaran & Umpan Balik',
+        keys: ['LED_A', 'LED_B', 'LED_C', 'LED_D', 'SEG'],
+        summary: 'Keluaran Q_A..Q_D ditampilkan ke 4 LED biner dan 7-segmen (0–A), sekaligus diumpankan balik lewat rel atas.',
+        detail: 'Jalur kabel di sisi atas membawa nilai Q sekarang kembali ke gerbang input agar rangkaian membentuk mesin keadaan tertutup.',
+        tip: 'Klik salah satu flip-flop lalu lihat panel kanan untuk melihat nilai Q dan peran persamaannya.'
+      }
+    ]
+  },
+  lift15: {
+    title: 'Panduan Tahap Demi Tahap · Soal 3 (Lift 15 Lantai)',
+    steps: [
+      {
+        title: 'Masukan X, P & Clock',
+        keys: ['SW_X', 'SW_P', 'CLK'],
+        summary: 'Saklar X menentukan arah (1=naik, 0=turun), P menentukan kecepatan (0=1 lantai, 1=3 lantai), dan CLK 1 Hz menggerakkan lift.',
+        detail: 'Sinyal X dan P masuk ke pin selektor S1 dan S0 pada keempat Multiplexer 4:1 lewat jalur rel kontrol di bagian bawah.',
+        tip: 'Coba klik saklar X atau P di kanvas dan perhatikan kotak saluran aktif (I0–I3) di dalam MUX ikut berpindah seketika.'
+      },
+      {
+        title: 'Tahap 1 · Suku Bersama',
+        keys: ['G_AB', 'G_ORAB', 'G_NORAB', 'G_CD', 'G_NCD', 'G_CORD', 'G_CXOR', 'G_CXNOR', 'G_BCD', 'U1_B1', 'G_B_CD'],
+        summary: 'Sebelas gerbang awal menghitung kombinasi dasar bit A B C D (seperti A·B, C·D, C⊕D, C⊙D) yang dipakai ulang di semua mode.',
+        detail: 'Karena beberapa suku muncul di lebih dari satu mode gerak, pemakaian bersama membuat total gerbang ringkas menjadi 37 gerbang.',
+        tip: 'Jelaskan bahwa ini adalah tahap pra-hitung agar keempat blok mode tidak perlu membuat ulang gerbang yang sama.'
+      },
+      {
+        title: 'Tahap 2 · 4 Blok Mode',
+        keys: ['D1_A1', 'D1_A', 'D1_B1', 'D1_B', 'D1_D1', 'D1_D', 'D3_A1', 'D3_A', 'D3_B1', 'D3_B', 'D3_C', 'D3_D', 'U1_A', 'U1_B2', 'U1_B3', 'U1_B', 'U1_C1', 'U1_C', 'U1_D1', 'U1_D', 'U3_A', 'U3_B1', 'U3_B2', 'U3_B', 'U3_C', 'U3_D'],
+        summary: 'Empat blok K-map menghitung calon lantai berikutnya secara paralel untuk mode Turun 1 (I0), Turun 3 (I1), Naik 1 (I2), dan Naik 3 (I3).',
+        detail: 'Memecah fungsi 6 variabel menjadi 4 blok mode membuat setiap blok cukup disederhanakan dengan K-map 4 variabel (Bagian 3.3).',
+        tip: 'Sorot bahwa keempat mode sudah siap menghitung calon lantai berikutnya termasuk pembatasan lantai 1 dan 15.'
+      },
+      {
+        title: 'Tahap 3 · 4× MUX 4:1',
+        keys: ['MUX_A', 'MUX_B', 'MUX_C', 'MUX_D'],
+        summary: 'Keempat Multiplexer 4:1 memilih satu saluran (I0–I3) berdasarkan selektor S1=X dan S0=P untuk diteruskan ke flip-flop D.',
+        detail: 'Saat X=1, P=0 (Naik 1), MUX memilih saluran I2; saat X=1, P=1 (Naik 3), MUX memilih I3; saat turun memilih I0 atau I1.',
+        tip: 'Inilah inti arsitektur Soal 3: MUX menyambungkan 4 blok logika mode ke 1 register 4-bit tanpa konflik.'
+      },
+      {
+        title: 'Tahap 4 · Register 4× D FF',
+        keys: ['FFA', 'FFB', 'FFC', 'FFD'],
+        summary: 'Empat flip-flop D menyimpan nomor lantai 1–15 dalam biner (keadaan awal reset = 0001 = lantai 1).',
+        detail: 'Karena karakteristik flip-flop D adalah Q⁺ = D, nilai terpilih dari MUX langsung menjadi nomor lantai baru pada tepi naik clock.',
+        tip: 'Tunjukkan bahwa FFD punya nilai awal 1 agar saat Reset lift selalu mulai dari lantai 1 (bukan 0).'
+      },
+      {
+        title: 'Keluaran & Umpan Balik',
+        keys: ['LED_A', 'LED_B', 'LED_C', 'LED_D', 'SEG'],
+        summary: 'Bit A B C D keluar ke 4 LED dan display 7-segmen (1–F), sekaligus dikirim kembali ke Tahap 1 & 2 lewat rel bus atas.',
+        detail: 'Keluaran Q̄ dari flip-flop B, C, dan D juga langsung dipakai sebagai komplemen B′, C′, D′ tanpa perlu gerbang NOT tambahan.',
+        tip: 'Ajak audiens melihat 7-segmen berubah 1 → 4 → 7 → A (10) → D (13) → F (15) saat mode Naik 3 dijalankan.'
+      }
+    ]
+  },
+  half: {
+    title: 'Panduan Tahap Demi Tahap · Half Adder',
+    steps: [
+      {
+        title: 'Masukan Saklar A & B',
+        keys: ['A', 'B'],
+        summary: 'Dua saklar biner A dan B menjadi dua bit yang akan dijumlahkan.',
+        detail: 'Klik langsung saklar di kanvas untuk mengubah nilainya antara 0 dan 1.',
+        tip: 'Uji semua 4 kombinasi: 00, 01, 10, dan 11.'
+      },
+      {
+        title: 'Gerbang XOR & AND',
+        keys: ['xor', 'and'],
+        summary: 'XOR menghitung bit jumlah (Sum = A ⊕ B), sedangkan AND menghitung bit simpanan (Carry = A · B).',
+        detail: 'Jika kedua input bernilai 1, XOR menghasilkan 0 dan AND menghasilkan 1 (1 + 1 = 10 biner).',
+        tip: 'Half Adder adalah rangkaian kombinasional murni karena keluarannya hanya bergantung pada input saat ini.'
+      },
+      {
+        title: 'Keluaran LED S & C',
+        keys: ['ledS', 'ledC'],
+        summary: 'Dua LED menampilkan hasil penjumlahan: S (Sum) dan C (Carry).',
+        detail: 'LED menyala hijau saat menerima logika 1 (HIGH).',
+        tip: 'Gunakan contoh ini untuk membedakan rangkaian kombinasional (tanpa clock) dengan rangkaian sekuensial di Soal 2 & 3.'
+      }
+    ]
+  },
+  generic: {
+    title: 'Panduan Penggunaan Sirkuit Maker (5 Langkah)',
+    steps: [
+      {
+        title: '1. Pilih Komponen',
+        keys: [],
+        summary: 'Seret komponen dari panel Pustaka di sebelah kiri ke kanvas, atau klik untuk menaruhnya di tengah layar.',
+        detail: 'Tersedia Masukan/Keluaran (Saklar, Clock, VCC, GND, LED, 7-Segmen), Gerbang Logika, Flip-Flop (D, T, JK), dan MUX 4:1.',
+        tip: 'Gunakan kotak pencarian di atas Pustaka untuk menemukan gerbang atau flip-flop dengan cepat.'
+      },
+      {
+        title: '2. Tarik Kabel Port',
+        keys: [],
+        summary: 'Hubungkan port keluaran (sisi kanan komponen) ke port masukan (sisi kiri komponen) untuk mengalirkan sinyal.',
+        detail: 'Seret dari satu port ke port tujuan, atau klik port asal lalu klik port tujuan. Kabel hijau menandakan nilai logika 1.',
+        tip: 'Satu port keluaran bisa dicabangkan ke banyak masukan, sedangkan satu port masukan hanya menerima satu kabel.'
+      },
+      {
+        title: '3. Atur Masukan & Clock',
+        keys: [],
+        summary: 'Klik Saklar atau Clock di kanvas untuk membalik nilainya antara 0 dan 1 secara langsung.',
+        detail: 'Tombol "Langkah" memberi satu pulsa clock ke seluruh flip-flop; tombol "Jalankan" menyalakan clock otomatis.',
+        tip: 'Aktifkan tombol "Nilai" di bilah atas kanvas untuk melihat angka 0/1 di setiap ujung keluaran.'
+      },
+      {
+        title: '4. Simulasi & Ubah Properti',
+        keys: [],
+        summary: 'Klik komponen atau kabel untuk membuka panel Inspektor di sebelah kanan guna melihat nilai dan mengubah propertinya.',
+        detail: 'Anda dapat mengganti label, jumlah masukan gerbang (2–4 pin), memutar orientasi 90°, atau mereset keadaan flip-flop.',
+        tip: 'Pada rangkaian Soal 2 & Soal 3, panel Inspektor juga menampilkan penjelasan fungsi komponen tersebut.'
+      },
+      {
+        title: '5. Simpan & Ekspor',
+        keys: [],
+        summary: 'Gunakan tombol Simpan JSON untuk menyimpan proyek, atau ekspor diagram bersih ke SVG / PNG untuk laporan.',
+        detail: 'Gunakan tombol muat cepat Soal 2 atau Soal 3 di atas kapan saja untuk kembali ke rangkaian tugas.',
+        tip: 'Pintasan cepat: Ctrl/⌘+Z untuk Urungkan, R untuk Putar, Del untuk Hapus, dan 0 untuk Pas ke layar.'
+      }
+    ]
+  }
+};
+
+function notifySceneChange() {
+  try { window.dispatchEvent(new CustomEvent('sirkuitlab:scenechange')); } catch (e) {}
+}
+
 function loadTemplate(key, opts = {}) {
   const spec = TEMPLATES[key];
   if (!spec) return;
@@ -2950,9 +3177,10 @@ function loadTemplate(key, opts = {}) {
   stopRunning(true);
   S.components = []; S.wires = []; S.selection.clear();
   S.uid = 1; S.ticks = 0; S.unstable = false;
+  S.templateKey = key;
   const map = {};
   for (const [keyName, item] of Object.entries(spec.components)) {
-    const c = makeComponent(item.type, item.x, item.y, item);
+    const c = makeComponent(item.type, item.x, item.y, { ...item, _key: keyName });
     if (!c) continue;
     if (opts.ffStates && Object.prototype.hasOwnProperty.call(opts.ffStates, keyName)) {
       c.q = opts.ffStates[keyName] ? 1 : 0;
@@ -2981,6 +3209,7 @@ function loadTemplate(key, opts = {}) {
   fitView();
   renderAll();
   markDirty();
+  notifySceneChange();
   if (!opts.silent) toast(`Contoh dimuat: ${spec.title}`);
 }
 
@@ -2989,11 +3218,12 @@ function loadTemplate(key, opts = {}) {
 /* ------------------------------------------------------------------ */
 function sceneData() {
   return {
-    app: 'SirkuitLab', version: 1, title: S.title, view: { ...S.view },
+    app: 'SirkuitLab', version: 1, title: S.title, templateKey: S.templateKey || 'generic', view: { ...S.view },
     components: S.components.map((c) => ({
       id: c.id, type: c.type, x: c.x, y: c.y, rot: c.rot || 0, label: c.label,
       ...(DEFS[c.type]?.hasInputs ? { inputs: c.inputs } : {}),
-      ...(c.on ? { on: true } : {}), ...(c.q ? { q: 1 } : {}), ...(c.initQ ? { initQ: 1 } : {})
+      ...(c.on ? { on: true } : {}), ...(c.q ? { q: 1 } : {}), ...(c.initQ ? { initQ: 1 } : {}),
+      ...(c._key ? { _key: c._key } : {}), ...(c.note ? { note: c.note } : {})
     })),
     wires: S.wires.map((w) => ({
       id: w.id, from: { c: w.from.c, p: w.from.p }, to: { c: w.to.c, p: w.to.p },
@@ -3019,7 +3249,9 @@ function normalizeScene(data) {
       y: Number.isFinite(+raw.y) ? snap(+raw.y) : 80 + (n % 4) * 120,
       rot: [0, 90, 180, 270].includes(+raw.rot) ? +raw.rot : 0,
       label: typeof raw.label === 'string' ? raw.label : autoLabel(type),
-      on: !!raw.on, q: raw.q ? 1 : 0, initQ: raw.initQ ? 1 : 0
+      on: !!raw.on, q: raw.q ? 1 : 0, initQ: raw.initQ ? 1 : 0,
+      _key: typeof raw._key === 'string' ? raw._key : '',
+      note: typeof raw.note === 'string' ? raw.note : ''
     };
     if (def.hasInputs) c.inputs = clamp(+raw.inputs || def.defaultInputs || 2, 2, 4);
     comps.push(c);
@@ -3046,7 +3278,12 @@ function normalizeScene(data) {
     wires.push(w);
   }
   S.uid = comps.length + wires.length + 2;
-  return { components: comps, wires, title: typeof data.title === 'string' ? data.title : 'Rangkaian Tanpa Judul', view: data.view };
+  return {
+    components: comps, wires,
+    title: typeof data.title === 'string' ? data.title : 'Rangkaian Tanpa Judul',
+    templateKey: typeof data.templateKey === 'string' ? data.templateKey : 'generic',
+    view: data.view
+  };
 }
 function applyScene(data, opts = {}) {
   stopRunning(true);
@@ -3054,6 +3291,7 @@ function applyScene(data, opts = {}) {
   S.components = clean.components;
   S.wires = clean.wires;
   S.title = clean.title;
+  S.templateKey = clean.templateKey || 'generic';
   $('#circuit-title').value = S.title;
   const mt = $('#asg-maker-title');
   if (mt) mt.value = S.title;
@@ -3067,6 +3305,7 @@ function applyScene(data, opts = {}) {
   if (opts.fit) fitView();
   renderAll();
   if (!opts.silent) markDirty();
+  notifySceneChange();
 }
 function checkpoint() {
   const snap = JSON.stringify(sceneData());
@@ -3128,6 +3367,29 @@ function fitView() {
   S.view.x = size.w / 2 - (b.x + b.w / 2) * zoom;
   S.view.y = size.h / 2 - (b.y + b.h / 2) * zoom;
   applyViewport();
+}
+function focusComponents(compIds) {
+  const size = canvasSize();
+  if (!size.w || !size.h || !compIds?.length) return;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const id of compIds) {
+    const c = getComp(id);
+    if (!c) continue;
+    const b = compBounds(c);
+    if (!b) continue;
+    minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
+    maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
+  }
+  if (!Number.isFinite(minX)) return;
+  const pad = 90;
+  const bw = (maxX - minX) + pad * 2;
+  const bh = (maxY - minY) + pad * 2;
+  const zoom = clamp(Math.min((size.w - 40) / bw, (size.h - 40) / bh), 0.38, 1.25);
+  S.view.zoom = zoom;
+  S.view.x = size.w / 2 - ((minX + maxX) / 2) * zoom;
+  S.view.y = size.h / 2 - ((minY + maxY) / 2) * zoom;
+  applyViewport();
+  renderOverlay();
 }
 function zoomAt(clientX, clientY, nextZoom) {
   const z = clamp(nextZoom, 0.25, 2.5);
@@ -3419,6 +3681,7 @@ function updateInspector() {
       <div><div class="eyebrow">Komponen</div><h3>${esc(def.title)}</h3><p>${esc(def.desc)}</p></div>
     </div>
     <div class="insp-body">
+      ${c.note ? `<div class="tipbox" style="margin-top:0;margin-bottom:13px">${icon('info', 12)} <b>Fungsi di rangkaian:</b> ${esc(c.note)}</div>` : ''}
       <div class="field"><label for="insp-label">Label</label><input class="input" id="insp-label" data-field="label" value="${esc(c.label)}" placeholder="Tanpa label" spellcheck="false"></div>
       ${gate ? `<div class="field"><label for="insp-inputs">Jumlah masukan</label><select class="input" id="insp-inputs" data-field="inputs">${[2, 3, 4].map((n) => `<option value="${n}" ${c.inputs === n ? 'selected' : ''}>${n} masukan</option>`).join('')}</select></div>` : ''}
       ${c.type === 'switch' || c.type === 'clock' ? `<div class="field"><span class="field-label">Nilai sekarang</span><button class="val-toggle" data-action="toggle-value"><span>${c.type === 'switch' ? 'Saklar' : 'Level clock'}</span><span class="pillval ${c.on ? 'on' : ''}">${c.on ? 1 : 0}</span></button></div>` : ''}
@@ -3922,6 +4185,7 @@ function newScene() {
   stopRunning(true);
   S.components = []; S.wires = []; S.selection.clear();
   S.ticks = 0; S.unstable = false; S.title = 'Rangkaian Tanpa Judul';
+  S.templateKey = 'generic';
   $('#circuit-title').value = S.title;
   const mt = $('#asg-maker-title');
   if (mt) mt.value = S.title;
@@ -3929,6 +4193,7 @@ function newScene() {
   runSimulation();
   renderAll();
   markDirty();
+  notifySceneChange();
   toast('Kanvas baru dibuat. Ctrl/⌘ Z untuk kembali.');
 }
 function toggleGrid() {
@@ -4227,6 +4492,7 @@ class MiniCircuitView {
     this.st = createCircuitState(spec);
     this.view = { x: 20, y: 20, zoom: 1 };
     this.showValues = opts.showValues !== false;
+    this.highlightKeys = null;
     this.pan = null;
     this.mount();
   }
@@ -4310,6 +4576,35 @@ class MiniCircuitView {
     this.showValues = !!show;
     this.renderOverlay();
   }
+  setHighlightKeys(keys) {
+    this.highlightKeys = (keys && keys.length) ? new Set(keys) : null;
+    this.render();
+    if (!this.svg) return;
+    if (!this.highlightKeys) {
+      this.fitView();
+      return;
+    }
+    const r = this.svg.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const c of this.st.components) {
+      if (!this.highlightKeys.has(c._key)) continue;
+      const b = compBounds(c);
+      if (!b) continue;
+      minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
+      maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
+    }
+    if (!Number.isFinite(minX)) return;
+    const pad = 70;
+    const bw = (maxX - minX) + pad * 2;
+    const bh = (maxY - minY) + pad * 2;
+    const zoom = clamp(Math.min((r.width - 20) / bw, (r.height - 20) / bh), 0.22, 1.25);
+    this.view.zoom = zoom;
+    this.view.x = r.width / 2 - ((minX + maxX) / 2) * zoom;
+    this.view.y = r.height / 2 - ((minY + maxY) / 2) * zoom;
+    this.applyViewport();
+    this.renderOverlay();
+  }
   syncState({ ffStates, switches } = {}) {
     for (const c of this.st.components) {
       if (['dff', 'tff', 'jkff'].includes(c.type)) {
@@ -4347,9 +4642,10 @@ class MiniCircuitView {
     const labelRot = c.rot ? ` transform="rotate(${-c.rot} ${def.w / 2} -8)"` : '';
     const label = (!def.noLabel && c.label)
       ? `<text class="comp-label" x="${def.w / 2}" y="-5" text-anchor="middle"${labelRot}>${fmtLabel(c.label)}</text>` : '';
-    return `<g class="comp ${lit ? 'lit' : ''}" data-comp="${c.id}" data-key="${esc(c._key)}" data-interactive="${interactive}" transform="translate(${c.x} ${c.y}) rotate(${c.rot || 0} ${def.w / 2} ${def.h / 2})">
+    const hlClass = this.highlightKeys ? (this.highlightKeys.has(c._key) ? 'spotlight' : 'dimmed') : '';
+    return `<g class="comp ${lit ? 'lit' : ''} ${hlClass}" data-comp="${c.id}" data-key="${esc(c._key)}" data-interactive="${interactive}" transform="translate(${c.x} ${c.y}) rotate(${c.rot || 0} ${def.w / 2} ${def.h / 2})">
       <rect class="hit" x="0" y="0" width="${def.w}" height="${def.h}"/>
-      ${def.draw(c)}${label}${portMarkup}
+      ${def.draw(c)}${label}<rect class="selbox" x="-4" y="-4" width="${def.w + 8}" height="${def.h + 8}" rx="7"/>${portMarkup}
     </g>`;
   }
   renderOverlay() {
@@ -4904,6 +5200,133 @@ init();
 
   q('#ac-sch-clock')?.addEventListener('click', clockCounter);
   q('#al-sch-clock')?.addEventListener('click', clockLift);
+
+  /* ---------------- Pengertian Per Tahap (Skema Mini & Sirkuit Maker) ---------------- */
+  function renderMiniSteps(containerSel, guideKey, getView) {
+    const box = q(containerSel);
+    const guide = typeof CIRCUIT_GUIDES !== 'undefined' ? CIRCUIT_GUIDES[guideKey] : null;
+    if (!box || !guide) return;
+    let activeIdx = -1;
+    const draw = () => {
+      box.innerHTML = guide.steps.map((st, idx) => `
+        <button type="button" class="asg-sch-step ${idx === activeIdx ? 'active' : ''}" data-mini-step="${idx}">
+          <span class="st-num">TAHAP ${String(idx + 1).padStart(2, '0')}</span>
+          <span class="st-t">${escA(st.title)}</span>
+          <span class="st-d">${escA(st.summary)}</span>
+        </button>
+      `).join('');
+    };
+    draw();
+    box.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-mini-step]');
+      if (!btn) return;
+      const idx = Number(btn.dataset.miniStep);
+      activeIdx = (activeIdx === idx) ? -1 : idx;
+      draw();
+      const v = getView();
+      if (!v) return;
+      if (activeIdx >= 0) v.setHighlightKeys(guide.steps[activeIdx].keys);
+      else v.setHighlightKeys(null);
+    });
+  }
+  renderMiniSteps('#ac-sch-steps', 'counter11', () => counterView);
+  renderMiniSteps('#al-sch-steps', 'lift15', () => liftView);
+
+  let makerStepIdx = 0;
+  function currentMakerGuide() {
+    const key = (typeof CIRCUIT_GUIDES !== 'undefined' && CIRCUIT_GUIDES[S.templateKey]) ? S.templateKey : 'generic';
+    return { key, guide: CIRCUIT_GUIDES[key] };
+  }
+  function renderMakerGuide(applySelection = false) {
+    const { guide } = currentMakerGuide();
+    if (!guide) return;
+    const headingEl = q('#asg-guide-heading');
+    const pillsEl = q('#asg-guide-pills');
+    const boxEl = q('#asg-guide-box');
+    const prevBtn = q('#asg-guide-prev');
+    const nextBtn = q('#asg-guide-next');
+    if (!pillsEl || !boxEl) return;
+    if (makerStepIdx >= guide.steps.length) makerStepIdx = 0;
+
+    if (headingEl) headingEl.textContent = guide.title;
+    pillsEl.innerHTML = guide.steps.map((st, idx) => `
+      <button type="button" class="asg-step-pill ${idx === makerStepIdx ? 'active' : ''}" data-maker-step="${idx}">
+        <span class="st-n">${String(idx + 1).padStart(2, '0')}</span>
+        <span>${escA(st.title)}</span>
+      </button>
+    `).join('');
+
+    if (makerStepIdx >= 0) {
+      const st = guide.steps[makerStepIdx];
+      boxEl.innerHTML = `
+        <div class="asg-guide-main">
+          <h3>Tahap ${makerStepIdx + 1}: ${escA(st.title)}</h3>
+          <p>${escA(st.summary)}</p>
+          <p class="asg-guide-detail">${escA(st.detail)}</p>
+        </div>
+        <div class="asg-guide-tip">
+          <b>Cara jelaskan ke dosen</b>
+          ${escA(st.tip)}
+        </div>
+      `;
+      if (prevBtn) prevBtn.disabled = makerStepIdx <= 0;
+      if (nextBtn) nextBtn.disabled = makerStepIdx >= guide.steps.length - 1;
+      if (applySelection && st.keys?.length) {
+        const keySet = new Set(st.keys);
+        const ids = S.components.filter((c) => keySet.has(c._key)).map((c) => c.id);
+        if (ids.length) {
+          S.selection = new Set(ids);
+          renderAll();
+          focusComponents(ids);
+        }
+      }
+    } else {
+      boxEl.innerHTML = `
+        <div class="asg-guide-main">
+          <h3>Tampilan Keseluruhan Rangkaian</h3>
+          <p>Menampilkan seluruh komponen dan kabel dari awal masukan hingga keluaran secara utuh.</p>
+          <p class="asg-guide-detail">Pilih salah satu tahap di atas atau klik komponen langsung di kanvas untuk membaca perannya di panel Inspektor kanan.</p>
+        </div>
+        <div class="asg-guide-tip">
+          <b>Tips presentasi</b>
+          Mulai dari tampilan penuh untuk menunjukkan alur kiri → kanan, lalu klik Tahap 01 hingga akhir secara berurutan.
+        </div>
+      `;
+      if (prevBtn) prevBtn.disabled = false;
+      if (nextBtn) nextBtn.disabled = false;
+      if (applySelection) {
+        S.selection.clear();
+        fitView();
+        renderAll();
+      }
+    }
+  }
+
+  q('#asg-guide-pills')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-maker-step]');
+    if (!btn) return;
+    makerStepIdx = Number(btn.dataset.makerStep);
+    renderMakerGuide(true);
+  });
+  q('#asg-guide-prev')?.addEventListener('click', () => {
+    if (makerStepIdx < 0) makerStepIdx = 0;
+    else if (makerStepIdx > 0) makerStepIdx--;
+    renderMakerGuide(true);
+  });
+  q('#asg-guide-next')?.addEventListener('click', () => {
+    const { guide } = currentMakerGuide();
+    if (makerStepIdx < 0) makerStepIdx = 0;
+    else if (makerStepIdx < guide.steps.length - 1) makerStepIdx++;
+    renderMakerGuide(true);
+  });
+  q('#asg-guide-all')?.addEventListener('click', () => {
+    makerStepIdx = -1;
+    renderMakerGuide(true);
+  });
+  window.addEventListener('sirkuitlab:scenechange', () => {
+    makerStepIdx = 0;
+    renderMakerGuide(false);
+  });
   q('#ac-sch-edit')?.addEventListener('click', () => {
     openMakerWithPreset('counter11', {
       ffStates: { FFA: counter.state.A, FFB: counter.state.B, FFC: counter.state.C, FFD: counter.state.D }
@@ -4966,6 +5389,8 @@ init();
       loadTemplate('counter11', { noCheckpoint: true, silent: true });
     }
     syncMakerHeader();
+    makerStepIdx = 0;
+    renderMakerGuide(false);
     requestAnimationFrame(() => {
       fitView();
       renderAll();
