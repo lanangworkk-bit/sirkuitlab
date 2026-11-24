@@ -156,7 +156,7 @@
   .tipbox{margin-top:12px;border:1px solid #e0eaff;background:var(--accent-softer);border-radius:9px;padding:9px 10px;font-size:10.5px;color:#475569;line-height:1.55}
   .tipbox b{color:var(--accent-ink)}
   .kbd{font-family:var(--mono);font-size:9.5px;background:#fff;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 4px;color:#475569}
-  .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.44);backdrop-filter:blur(3px);display:none;place-items:center;z-index:100;padding:20px}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.44);backdrop-filter:blur(3px);display:none;place-items:center;z-index:210;padding:20px}
   .modal-backdrop.open{display:grid}
   .modal{background:#fff;border-radius:15px;box-shadow:0 30px 90px rgba(15,23,42,.35);width:min(620px,94vw);max-height:88vh;overflow:auto;animation:pop .16s ease}
   .modal-head{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 0}
@@ -177,13 +177,13 @@
   .modal-foot{display:flex;justify-content:flex-end;gap:8px;padding:0 22px 20px}
   .primary-btn{background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:650}
   .primary-btn:hover{background:var(--accent-ink)}
-  .toasts{position:fixed;bottom:42px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;z-index:120;pointer-events:none;width:max-content;max-width:90vw}
+  .toasts{position:fixed;bottom:42px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;z-index:220;pointer-events:none;width:max-content;max-width:90vw}
   .toast{background:#0f172a;color:#fff;border-radius:8px;padding:8px 13px;font-size:11.5px;font-weight:550;box-shadow:var(--shadow-md);display:flex;gap:7px;align-items:center;animation:toastIn .18s ease}
   .toast svg{color:#34d399;flex:0 0 auto}
   .toast.warn svg{color:#fbbf24}
   .toast.err svg{color:#f87171}
   @keyframes toastIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-  .drag-ghost{position:fixed;z-index:200;width:52px;height:44px;border-radius:10px;background:#fff;border:1px solid #bfd4ff;box-shadow:0 10px 26px rgba(37,99,235,.25);display:grid;place-items:center;pointer-events:none;transform:translate(-50%,-50%)}
+  .drag-ghost{position:fixed;z-index:240;width:52px;height:44px;border-radius:10px;background:#fff;border:1px solid #bfd4ff;box-shadow:0 10px 26px rgba(37,99,235,.25);display:grid;place-items:center;pointer-events:none;transform:translate(-50%,-50%)}
   .drag-ghost svg{width:38px;height:27px;color:var(--accent)}
   .show-tablet{display:none!important}
   .show-mobile{display:none!important}
@@ -1132,6 +1132,63 @@ button,input,select,textarea{font-family:inherit}
   #asg-verify .asg-table td{padding:7px 4px}
   #asg-verify .asg-pill-status{padding:3px 4px;font-size:8px;gap:3px}
 }
+/* Embedded gate-level schematics & Sirkuit Maker tab ------------------- */
+.asg-circuit-card{margin-top:20px}
+.asg-circuit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.asg-circuit-head .asg-sub{margin-bottom:0}
+.asg-circuit-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.asg-mini-btn{
+  height:32px;padding:0 11px;border:1px solid #d4d4d8;border-radius:999px;
+  background:#fff;color:var(--ink2);font-size:11px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;transition:.13s;
+}
+.asg-mini-btn:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.asg-mini-btn.on{background:var(--ink);border-color:var(--ink);color:var(--lime)}
+.asg-mini-btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.asg-mini-btn.primary:hover{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.asg-mini-seg{display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px;gap:2px}
+.asg-mini-seg button{border:0;background:transparent;border-radius:999px;height:26px;padding:0 9px;font-size:11px;font-weight:650;color:var(--muted)}
+.asg-mini-seg button:hover{background:#fff;color:var(--ink)}
+.asg-mini-seg span{min-width:40px;text-align:center;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.asg-circuit-stage{
+  position:relative;height:460px;border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;background:var(--surface);
+}
+.asg-circuit-stage.tall{height:540px}
+.asg-circuit-stage.expanded{height:min(76vh,760px)}
+.asg-circuit-stage svg.mini-board{width:100%;height:100%;display:block;touch-action:none;user-select:none;cursor:grab}
+.asg-circuit-stage.panning svg.mini-board{cursor:grabbing}
+.asg-circuit-stage .wire:not(.high) .wire-line{opacity:.72}
+.asg-circuit-stage .comp[data-interactive="1"]{cursor:pointer}
+.asg-circuit-foot{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  margin-top:12px;font-family:var(--mono);font-size:10px;color:var(--muted);
+}
+.asg-circuit-meta{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.asg-circuit-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink2);font-weight:600;
+}
+.asg-circuit-badge i{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.asg-main.maker-active{max-width:1480px;padding-top:28px}
+.asg-maker-shell{
+  display:flex;flex-direction:column;height:min(780px,calc(100dvh - 150px));min-height:560px;
+  border:1px solid var(--line2);border-radius:16px;overflow:hidden;background:#fff;position:relative;
+}
+.asg-maker-bar{
+  min-height:52px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.asg-maker-bar .input{height:34px;padding:6px 10px}
+#asg-maker-slot{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+#asg-maker-slot .workbench{flex:1;min-height:0}
+.asg-maker-shell .palette.drawer-open,.asg-maker-shell .inspector.drawer-open{z-index:175}
+.asg-maker-shell .drawer-backdrop{z-index:170}
+@media (max-width:760px){
+  .asg-circuit-stage{height:360px}
+  .asg-circuit-stage.tall{height:420px}
+  .asg-maker-shell{height:calc(100dvh - 120px);min-height:480px}
+}
 @media (max-width:360px){
   .asg-hero h1{font-size:30px}
   .asg-byline{flex-wrap:wrap;gap:8px;letter-spacing:.06em}
@@ -1219,6 +1276,10 @@ button,input,select,textarea{font-family:inherit}
             <button data-template="half">Half Adder — gerbang XOR &amp; AND</button>
             <button data-template="dff">D Flip-Flop — clock &amp; LED</button>
             <button data-template="seven">7-Segmen — 4 saklar biner</button>
+            <div class="sep"></div>
+            <div class="mlabel">Rangkaian Tugas (NIM Ganjil)</div>
+            <button data-template="counter11">Soal 2 — Counter Modulo-11 (JK FF)</button>
+            <button data-template="lift15">Soal 3 — Lift 15 Lantai (D FF + MUX)</button>
             <div class="sep"></div>
             <button data-template="empty">Kanvas kosong</button>
           </div>
@@ -1308,7 +1369,7 @@ button,input,select,textarea{font-family:inherit}
         <div class="step"><span class="n">5</span><p>Klik komponen untuk mengubah label, jumlah masukan gerbang, atau rotasi di panel properti sebelah kanan.</p></div>
       </div>
       <h3>Demo Tugas</h3>
-      <p>Tombol <b>Demo Tugas</b> di bilah atas membuka mode demo untuk <b>Soal 2</b> (counter modulo-11 dengan JK flip-flop) dan <b>Soal 3</b> (lift 15 lantai dengan D flip-flop), lengkap dengan tab <b>Verifikasi</b> untuk menguji seluruh transisi. Tekan <b>Esc</b> atau <b>Kembali ke Editor</b> untuk menutupnya.</p>
+      <p>Tombol <b>Demo Tugas</b> di bilah atas membuka mode demo untuk <b>Soal 2</b> (counter modulo-11 dengan JK flip-flop) dan <b>Soal 3</b> (lift 15 lantai dengan D flip-flop), lengkap dengan <b>rangkaian gerbang logika lengkap</b> yang tersinkronisasi langsung, tab <b>Sirkuit Maker</b> terintegrasi untuk mengedit/merakit rangkaian, serta tab <b>Verifikasi</b>. Tekan <b>Esc</b> atau <b>Kembali ke Editor</b> untuk menutupnya.</p>
       <h3>Pintasan papan ketik</h3>
       <div class="shortcut-grid">
         <div class="shortcut"><span>Urungkan / Ulangi</span><span><span class="kbd">Ctrl/⌘ Z</span> <span class="kbd">Shift Z</span></span></div>
@@ -1344,6 +1405,7 @@ button,input,select,textarea{font-family:inherit}
     <nav class="asg-tabs" role="tablist" aria-label="Bagian demo tugas">
       <button class="active" data-asg-tab="counter" role="tab" aria-selected="true"><span class="tab-num">02</span>Counter 11</button>
       <button data-asg-tab="lift" role="tab" aria-selected="false"><span class="tab-num">03</span>Lift 15</button>
+      <button data-asg-tab="maker" role="tab" aria-selected="false"><span class="tab-num">04</span>Sirkuit Maker</button>
       <button data-asg-tab="verify" role="tab" aria-selected="false"><span class="tab-num">✓</span>Verifikasi</button>
     </nav>
   </header>
@@ -1353,15 +1415,16 @@ button,input,select,textarea{font-family:inherit}
       <div class="asg-hero-copy">
         <div class="asg-kicker"><span class="asg-kicker-dot" aria-hidden="true"></span>Tugas NIM Ganjil · Sistem Digital</div>
         <h1 id="asg-title">Counter Modulo-11 <span class="asg-hero-line"><span class="asg-amp">&amp;</span> <span class="asg-em">Lift 15 Lantai</span></span></h1>
-        <p>Dua rangkaian, satu halaman. Counter JK modulo-11 dan lift 15 lantai dengan D flip-flop — setiap keadaan dihitung ulang dari persamaan K-map, bukan animasi tempelan.</p>
+        <p>Dua rangkaian lengkap beserta simulasi dan Sirkuit Maker terintegrasi. Counter JK modulo-11 dan lift 15 lantai dengan D flip-flop — setiap sinyal gerbang logika dan keadaan dihitung langsung dari rangkaian K-map.</p>
         <div class="asg-byline"><span class="asg-byline-line" aria-hidden="true"></span><span>I Ketut Lanang Subakti</span><span class="asg-dotsep">·</span><span>Kelas B</span></div>
       </div>
       <aside class="asg-hero-spec" aria-label="Ringkasan tugas">
         <div class="asg-hero-figure" aria-hidden="true"><span class="num">02</span><span class="slash">/</span><span class="num">03</span><span class="cap">soal</span></div>
         <dl>
-          <div><dt>Counter</dt><dd>4 × JK · 11 keadaan</dd></div>
-          <div><dt>Lift</dt><dd>4 × D · 15 lantai</dd></div>
-          <div><dt>Verifikasi</dt><dd>76 transisi · 100%</dd></div>
+          <div><dt>Counter</dt><dd>4 × JK · 8 gerbang · 11 keadaan</dd></div>
+          <div><dt>Lift</dt><dd>4 × D · 4 MUX 4:1 · 37 gerbang</dd></div>
+          <div><dt>Sirkuit Maker</dt><dd>Lengkap · edit &amp; ekspor</dd></div>
+          <div><dt>Verifikasi</dt><dd>76 transisi · netlist 100%</dd></div>
         </dl>
       </aside>
     </div>
@@ -1425,6 +1488,34 @@ button,input,select,textarea{font-family:inherit}
           </div>
           <div class="asg-h3" style="margin:16px 0 8px">Riwayat clock</div>
           <div class="asg-history" id="ac-history"></div>
+        </div>
+      </div>
+
+      <div class="asg-card asg-circuit-card" id="ac-circuit-card">
+        <div class="asg-circuit-head">
+          <div>
+            <h2>Rangkaian Lengkap · Counter Modulo-11</h2>
+            <p class="asg-sub">4× JK Flip-Flop, 8 gerbang logika (AND×3, OR×3, NOR×2), VCC, Clock, 4 LED &amp; 7-Segmen — kabel hijau menandakan sinyal 1 (HIGH) secara langsung.</p>
+          </div>
+          <div class="asg-circuit-tools">
+            <button class="asg-mini-btn primary" id="ac-sch-clock" title="Beri satu pulsa clock">Clock +1 →</button>
+            <div class="asg-mini-seg" role="group" aria-label="Zoom skema counter">
+              <button id="ac-sch-out" title="Perkecil">−</button>
+              <span id="ac-sch-zoom">100%</span>
+              <button id="ac-sch-in" title="Perbesar">+</button>
+            </div>
+            <button class="asg-mini-btn" id="ac-sch-fit" title="Pas ke kotak">Pas</button>
+            <button class="asg-mini-btn on" id="ac-sch-val" title="Tampilkan angka logika 0/1">Nilai</button>
+            <button class="asg-mini-btn" id="ac-sch-expand" title="Perbesar kanvas skema">Perbesar</button>
+            <button class="asg-mini-btn" id="ac-sch-svg" title="Unduh gambar SVG">SVG</button>
+            <button class="asg-mini-btn" id="ac-sch-png" title="Unduh gambar PNG">PNG</button>
+            <button class="asg-mini-btn primary" id="ac-sch-edit" title="Buka rangkaian ini di Sirkuit Maker lengkap">Edit di Sirkuit Maker →</button>
+          </div>
+        </div>
+        <div class="asg-circuit-stage" id="ac-sch-stage"></div>
+        <div class="asg-circuit-foot">
+          <div class="asg-circuit-meta" id="ac-sch-meta"><span class="asg-circuit-badge"><i></i>Skema sinkron aktif</span></div>
+          <span>Seret untuk menggeser · Scroll untuk zoom · Klik Clock pada skema untuk melangkah</span>
         </div>
       </div>
 
@@ -1512,6 +1603,34 @@ button,input,select,textarea{font-family:inherit}
         </div>
       </div>
 
+      <div class="asg-card asg-circuit-card" id="al-circuit-card">
+        <div class="asg-circuit-head">
+          <div>
+            <h2>Rangkaian Lengkap · Lift 15 Lantai</h2>
+            <p class="asg-sub">4× D Flip-Flop (awal 0001 = lantai 1), 4× Multiplexer 4:1 (selektor X &amp; P), 37 gerbang logika dari 4 blok mode K-map, 4 LED &amp; 7-Segmen.</p>
+          </div>
+          <div class="asg-circuit-tools">
+            <button class="asg-mini-btn primary" id="al-sch-clock" title="Beri satu pulsa clock 1 detik">Clock +1 →</button>
+            <div class="asg-mini-seg" role="group" aria-label="Zoom skema lift">
+              <button id="al-sch-out" title="Perkecil">−</button>
+              <span id="al-sch-zoom">100%</span>
+              <button id="al-sch-in" title="Perbesar">+</button>
+            </div>
+            <button class="asg-mini-btn" id="al-sch-fit" title="Pas ke kotak">Pas</button>
+            <button class="asg-mini-btn on" id="al-sch-val" title="Tampilkan angka logika 0/1">Nilai</button>
+            <button class="asg-mini-btn" id="al-sch-expand" title="Perbesar kanvas skema">Perbesar</button>
+            <button class="asg-mini-btn" id="al-sch-svg" title="Unduh gambar SVG">SVG</button>
+            <button class="asg-mini-btn" id="al-sch-png" title="Unduh gambar PNG">PNG</button>
+            <button class="asg-mini-btn primary" id="al-sch-edit" title="Buka rangkaian ini di Sirkuit Maker lengkap">Edit di Sirkuit Maker →</button>
+          </div>
+        </div>
+        <div class="asg-circuit-stage tall" id="al-sch-stage"></div>
+        <div class="asg-circuit-foot">
+          <div class="asg-circuit-meta" id="al-sch-meta"><span class="asg-circuit-badge"><i></i>Skema lift aktif</span></div>
+          <span>Seret untuk menggeser · Scroll untuk zoom · Klik saklar X, P, atau Clock langsung pada skema</span>
+        </div>
+      </div>
+
       <div class="asg-card" style="margin-top:16px">
         <h2>Aturan gerak yang diuji</h2>
         <p class="asg-sub">Nilai lantai berikutnya dihitung dengan pembatasan di lantai 1 dan 15.</p>
@@ -1527,13 +1646,60 @@ button,input,select,textarea{font-family:inherit}
           </table>
         </div>
       </div>
+
+      <div class="asg-card" style="margin-top:16px">
+        <h2>Persamaan K-map 4 Mode (Bagian 3.3)</h2>
+        <p class="asg-sub">Setiap masukan flip-flop dipilih oleh Multiplexer 4:1: D<sub>i</sub> = MUX<sub>4:1</sub>(I<sub>0</sub>=Turun 1, I<sub>1</sub>=Turun 3, I<sub>2</sub>=Naik 1, I<sub>3</sub>=Naik 3 | S<sub>1</sub>=X, S<sub>0</sub>=P).</p>
+        <div class="asg-table-wrap">
+          <table class="asg-table">
+            <thead><tr><th>Mode (S<sub>1</sub>S<sub>0</sub>)</th><th>D<sub>A</sub></th><th>D<sub>B</sub></th><th>D<sub>C</sub></th><th>D<sub>D</sub></th></tr></thead>
+            <tbody>
+              <tr><td><b>Turun 1</b> <span class="mono">(00 · I0)</span></td><td class="mono">AB + AC + AD</td><td class="mono">BC + BD + B′C′D′</td><td class="mono">CD + C′D′</td><td class="mono">D′ + A′B′C′</td></tr>
+              <tr><td><b>Turun 3</b> <span class="mono">(01 · I1)</span></td><td class="mono">AB + ACD</td><td class="mono">BCD + AB′C′ + AB′D′</td><td class="mono">(A+B)(C⊕D)</td><td class="mono">D′ + A′B′</td></tr>
+              <tr><td><b>Naik 1</b> <span class="mono">(10 · I2)</span></td><td class="mono">A + BCD</td><td class="mono">AB + BC′ + BD′ + B′CD</td><td class="mono">CD′ + C′D + ABD</td><td class="mono">D′ + ABC</td></tr>
+              <tr><td><b>Naik 3</b> <span class="mono">(11 · I3)</span></td><td class="mono">A + BC + BD</td><td class="mono">AC + AD + A′B′ + BC′D′</td><td class="mono">AB + CD + C′D′</td><td class="mono">D′ + AB</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SIRKUIT MAKER LENGKAP ================= -->
+    <section class="asg-panel" id="asg-maker" data-asg-panel="maker" role="tabpanel">
+      <div class="asg-head">
+        <div>
+          <div class="asg-index"><span>03</span> Sirkuit Maker</div>
+          <h2>Sirkuit Maker Lengkap</h2>
+          <p>Rakit, ubah kabel, tambah gerbang atau MUX, jalankan pulsa clock, dan ekspor rangkaian Soal 2, Soal 3, atau desain kustom langsung dari halaman tugas.</p>
+        </div>
+        <div class="asg-actions" style="margin-top:0">
+          <button class="asg-btn primary" data-maker-preset="counter11">Muat Soal 2 · Counter 11</button>
+          <button class="asg-btn dark" data-maker-preset="lift15">Muat Soal 3 · Lift 15</button>
+          <button class="asg-btn" data-maker-preset="half">Half Adder</button>
+          <button class="asg-btn" data-maker-preset="empty">Kanvas Kosong</button>
+        </div>
+      </div>
+      <div class="asg-maker-shell" id="asg-maker-shell">
+        <div class="asg-maker-bar">
+          <input id="asg-maker-title" class="input" style="max-width:300px;font-weight:650" value="Rangkaian Tanpa Judul" aria-label="Judul rangkaian di Sirkuit Maker" spellcheck="false">
+          <div style="flex:1"></div>
+          <button class="sbtn" id="asg-maker-undo" title="Urungkan (Ctrl/⌘ Z)" disabled>Urungkan</button>
+          <button class="sbtn" id="asg-maker-redo" title="Ulangi (Ctrl/⌘ Shift Z)" disabled>Ulangi</button>
+          <button class="sbtn" id="asg-maker-open" title="Impor file JSON">Impor JSON</button>
+          <button class="sbtn" id="asg-maker-save" title="Simpan JSON">Simpan JSON</button>
+          <button class="sbtn" id="asg-maker-svg" title="Ekspor gambar SVG">SVG</button>
+          <button class="sbtn" id="asg-maker-png" title="Ekspor gambar PNG">PNG</button>
+          <button class="sbtn" id="asg-maker-help" title="Bantuan &amp; pintasan">Bantuan</button>
+        </div>
+        <div id="asg-maker-slot"></div>
+      </div>
     </section>
 
     <!-- ================= VERIFIKASI ================= -->
     <section class="asg-panel" id="asg-verify" data-asg-panel="verify" role="tabpanel">
       <div class="asg-head">
         <div>
-          <div class="asg-index"><span>03</span> Verifikasi</div>
+          <div class="asg-index"><span>04</span> Verifikasi</div>
           <h2>Verifikasi rangkaian</h2>
           <p>Semua transisi dihitung ulang dari persamaan K-map, lalu dibandingkan dengan aturan soal. Status hijau berarti cocok.</p>
         </div>
@@ -1579,9 +1745,9 @@ button,input,select,textarea{font-family:inherit}
         <h2>Catatan metodologi</h2>
         <p class="asg-sub">Verifikasi ini independen dari tampilan simulasi: fungsi logika diuji terhadap aturan aritmetika.</p>
         <ul class="asg-method-list">
-          <li><b>Counter:</b> J dan K tiap flip-flop dihitung dari persamaan 2.4, lalu Q⁺ = JQ′ + K′Q. Hasilnya harus sama dengan urutan 1→3→5→7→9→10→8→6→4→2→0→1.</li>
+          <li><b>Counter:</b> J dan K tiap flip-flop dihitung dari persamaan 2.4 dan disimulasikan langsung melalui netlist 8 gerbang + 4 flip-flop JK (Q⁺ = JQ′ + K′Q). Hasilnya harus sama dengan urutan 1→3→5→7→9→10→8→6→4→2→0→1.</li>
           <li><b>State tak terpakai:</b> keadaan 11–15 dijalankan sampai kembali ke 0–10; batas yang diharapkan adalah 3 clock.</li>
-          <li><b>Lift:</b> D<sub>A</sub>…D<sub>D</sub> dari persamaan 3.3 dibandingkan dengan biner dari min(15, L+step) atau max(1, L−step), untuk semua 15 lantai dan 4 mode.</li>
+          <li><b>Lift:</b> D<sub>A</sub>…D<sub>D</sub> dari persamaan 3.3 dan netlist 37 gerbang + 4 MUX 4:1 dibandingkan dengan biner dari min(15, L+step) atau max(1, L−step), untuk semua 15 lantai dan 4 mode.</li>
         </ul>
       </div>
     </section>
@@ -1680,6 +1846,10 @@ const CIRCUIT_CSS = `
 .const-val.zero{fill:#b91c1c}
 .note-bg{fill:#fffbeb;stroke:#fcd34d;stroke-width:1.2;stroke-dasharray:4 3}
 .note-text{font-family:Satoshi,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:12px;font-weight:500;fill:#92400e}
+.mux-sep{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:3 2}
+.mux-ch{fill:none}
+.mux-ch.active{fill:#ecfdf5;stroke:#10b981;stroke-width:1.2}
+.pin-label.active{fill:#047857}
 `;
 const styleEl = document.createElement('style');
 styleEl.id = 'circuit-style';
@@ -1769,6 +1939,7 @@ function compIcon(type) {
     case 'dff': return wrap('<path d="M2 8h8M2 24h8M38 10h8M38 22h8"/><rect x="10" y="4" width="28" height="24" rx="2"/><path d="M13 20l4 3-4 3"/><text x="18" y="15" font-size="7" font-family="monospace" fill="currentColor" stroke="none">D</text><text x="31" y="15" font-size="7" font-family="monospace" fill="currentColor" stroke="none">Q</text>');
     case 'tff': return wrap('<path d="M2 8h8M2 24h8M38 10h8M38 22h8"/><rect x="10" y="4" width="28" height="24" rx="2"/><path d="M13 20l4 3-4 3"/><text x="18" y="15" font-size="7" font-family="monospace" fill="currentColor" stroke="none">T</text><text x="31" y="15" font-size="7" font-family="monospace" fill="currentColor" stroke="none">Q</text>');
     case 'jkff': return wrap('<path d="M2 7h8M2 16h8M2 25h8M38 9h8M38 23h8"/><rect x="10" y="3" width="28" height="26" rx="2"/><path d="M13 13l4 3-4 3"/><text x="19" y="9" font-size="6.5" font-family="monospace" fill="currentColor" stroke="none">J</text><text x="19" y="25" font-size="6.5" font-family="monospace" fill="currentColor" stroke="none">K</text><text x="31" y="11" font-size="6.5" font-family="monospace" fill="currentColor" stroke="none">Q</text>');
+    case 'mux4': return wrap('<path d="M2 8h10M2 14h10M2 20h10M2 26h10M36 16h10"/><path d="M12 4l24 5v14l-24 5z"/><text x="23" y="18" text-anchor="middle" font-size="6.5" font-family="monospace" fill="currentColor" stroke="none">4:1</text>');
     case 'label': return wrap('<rect x="3" y="6" width="42" height="20" rx="3" stroke-dasharray="3 2"/><text x="24" y="20" text-anchor="middle" font-size="10" font-family="Georgia,serif" fill="currentColor" stroke="none">Aa</text>');
     default: return wrap('<circle cx="24" cy="16" r="10"/>');
   }
@@ -1962,6 +2133,39 @@ function ffBase(type) {
 DEFS.dff = ffBase('dff');
 DEFS.tff = ffBase('tff');
 DEFS.jkff = ffBase('jkff');
+DEFS.mux4 = {
+  title: 'Multiplexer 4:1', short: 'MUX 4:1', desc: 'Memilih satu dari 4 masukan (I0–I3) sesuai selektor S1 (MSB) dan S0 (LSB).',
+  keys: 'mux multiplexer 4:1 selektor', cat: 'gate', w: 100, h: 140,
+  ports: () => [
+    { id: 'i0', dir: 'in', x: 0, y: 20 }, { id: 'i1', dir: 'in', x: 0, y: 42 },
+    { id: 'i2', dir: 'in', x: 0, y: 64 }, { id: 'i3', dir: 'in', x: 0, y: 86 },
+    { id: 's1', dir: 'in', x: 0, y: 112 }, { id: 's0', dir: 'in', x: 0, y: 130 },
+    { id: 'out', dir: 'out', x: 100, y: 64 }
+  ],
+  draw(c) {
+    const sel = Number.isInteger(c._sel) ? c._sel : 0;
+    const ys = [20, 42, 64, 86];
+    const leads = ys.map((y) => `<line class="lead" x1="0" y1="${y}" x2="10" y2="${y}"/>`).join('')
+      + '<line class="lead" x1="0" y1="112" x2="10" y2="112"/><line class="lead" x1="0" y1="130" x2="10" y2="130"/>'
+      + '<line class="lead" x1="90" y1="64" x2="100" y2="64"/>';
+    const labels = ys.map((y, i) => `<text class="pin-label ${sel === i ? 'active' : ''}" x="19" y="${y + 3}">I${i}</text>`).join('');
+    return `${leads}
+      <rect class="ff-body" x="10" y="6" width="80" height="128" rx="6"/>
+      <rect class="mux-ch active" x="14" y="${12 + sel * 22}" width="24" height="15" rx="4"/>
+      ${labels}
+      <line class="mux-sep" x1="16" y1="98" x2="84" y2="98"/>
+      <text class="pin-label" x="19" y="115">S1</text>
+      <text class="pin-label" x="19" y="133">S0</text>
+      <text class="pin-label" x="85" y="67" text-anchor="end">Y</text>
+      <text class="ff-name" x="62" y="54" text-anchor="middle">MUX</text>
+      <text class="pin-label" x="62" y="68" text-anchor="middle">4:1</text>`;
+  },
+  eval(c, inp) {
+    const sel = (inp.s1 ? 2 : 0) | (inp.s0 ? 1 : 0);
+    c._sel = sel;
+    return { out: !!inp['i' + sel] };
+  }
+};
 DEFS.label = {
   title: 'Teks / Catatan', short: 'Teks', desc: 'Catatan bebas di kanvas. Klik untuk mengubah teksnya.', cat: 'note', w: 300, h: 36, noLabel: true,
   ports: () => [],
@@ -1976,7 +2180,7 @@ DEFS.label = {
 const PALETTE = [
   { label: 'Masukan & Keluaran', items: ['switch', 'clock', 'const1', 'const0', 'led', 'sevenseg'] },
   { label: 'Gerbang Logika', items: ['and', 'or', 'not', 'nand', 'nor', 'xor', 'xnor', 'buffer'] },
-  { label: 'Sekuensial', items: ['dff', 'tff', 'jkff'] },
+  { label: 'Sekuensial & MUX', items: ['dff', 'tff', 'jkff', 'mux4'] },
   { label: 'Anotasi', items: ['label'] }
 ];
 /* ------------------------------------------------------------------ */
@@ -2149,7 +2353,27 @@ function cleanPoints(pts) {
   }
   return out;
 }
-function routePoints(a, b) {
+function routePoints(a, b, route = null) {
+  if (route && Number.isFinite(route.routeY)) {
+    const outX = Number.isFinite(route.outX) ? route.outX : (a.x + a.nx * 20);
+    const inX = Number.isFinite(route.inX) ? route.inX : (b.x + b.nx * 20);
+    return cleanPoints([
+      { x: a.x, y: a.y },
+      { x: outX, y: a.y },
+      { x: outX, y: route.routeY },
+      { x: inX, y: route.routeY },
+      { x: inX, y: b.y },
+      { x: b.x, y: b.y }
+    ]);
+  }
+  if (route && Number.isFinite(route.midX)) {
+    return cleanPoints([
+      { x: a.x, y: a.y },
+      { x: route.midX, y: a.y },
+      { x: route.midX, y: b.y },
+      { x: b.x, y: b.y }
+    ]);
+  }
   const stub = 18;
   const p1 = { x: a.x + a.nx * stub, y: a.y + a.ny * stub };
   const p2 = { x: b.x + b.nx * stub, y: b.y + b.ny * stub };
@@ -2218,12 +2442,12 @@ function roundedPath(pts, radius = 9) {
   d += ` L ${fnum(last.x)} ${fnum(last.y)}`;
   return d;
 }
-function wirePath(w) {
-  const a = getComp(w.from.c), b = getComp(w.to.c);
+function wirePath(w, compLookup = getComp) {
+  const a = compLookup(w.from.c), b = compLookup(w.to.c);
   if (!a || !b) return '';
   const pa = portMeta(a, w.from.p), pb = portMeta(b, w.to.p);
   if (!pa || !pb) return '';
-  return roundedPath(routePoints(pa, pb));
+  return roundedPath(routePoints(pa, pb, w.route || null));
 }
 
 /* ------------------------------------------------------------------ */
@@ -2367,7 +2591,7 @@ function autoLabel(type) {
     }
     return 'S';
   }
-  return ({ led: 'LED', clock: 'CLK', sevenseg: '7SEG', dff: 'DFF', tff: 'TFF', jkff: 'JKFF', label: 'Teks' })[type] || '';
+  return ({ led: 'LED', clock: 'CLK', sevenseg: '7SEG', dff: 'DFF', tff: 'TFF', jkff: 'JKFF', mux4: 'MUX', label: 'Teks' })[type] || '';
 }
 function makeComponent(type, x, y, props = {}) {
   const def = DEFS[type];
@@ -2375,7 +2599,7 @@ function makeComponent(type, x, y, props = {}) {
   const c = {
     id: uid('c'), type, x: snap(x), y: snap(y), rot: props.rot || 0,
     label: props.label !== undefined ? String(props.label) : autoLabel(type),
-    on: !!props.on, q: props.q ? 1 : 0
+    on: !!props.on, q: props.q ? 1 : 0, initQ: props.initQ ? 1 : 0
   };
   if (def.hasInputs) c.inputs = clamp(+props.inputs || def.defaultInputs || 2, 2, 4);
   return c;
@@ -2445,12 +2669,237 @@ function pruneRemovedPorts(c) {
 }
 function updateTitleFromInput() {
   S.title = $('#circuit-title').value;
+  const mt = $('#asg-maker-title');
+  if (mt && mt.value !== S.title) mt.value = S.title;
   markDirty();
 }
 
 /* ------------------------------------------------------------------ */
-/* Template contoh                                                     */
+/* Template contoh & rangkaian tugas lengkap                           */
 /* ------------------------------------------------------------------ */
+function buildCounter11Spec() {
+  const fb = {
+    FFA: { routeY: 76, outX: 896, inX: 180 },
+    FFB: { routeY: 94, outX: 910, inX: 196 },
+    FFC: { routeY: 112, outX: 924, inX: 212 },
+    FFD: { routeY: 130, outX: 938, inX: 228 }
+  };
+  const clkRoute = { routeY: 780, outX: 156, inX: 716 };
+  return {
+    title: 'Soal 2 — Counter Modulo-11 (4× JK FF)',
+    components: {
+      NOTE: { type: 'label', x: 40, y: 20, label: 'SOAL 2 · Counter Modulo-11 (4× JK FF + 8 Gerbang)' },
+      CLK: { type: 'clock', x: 40, y: 400, label: 'CLK' },
+      VCC: { type: 'const1', x: 580, y: 580, label: 'VCC (KC=1)' },
+      G_T: { type: 'and', x: 280, y: 180, label: 't = C·D' },
+      G_N: { type: 'nor', x: 280, y: 280, label: "n = C'·D'" },
+      G_JA: { type: 'and', x: 440, y: 160, label: 'JA = B·t' },
+      G_AN: { type: 'and', x: 440, y: 280, label: 'A·n' },
+      G_JB: { type: 'or', x: 580, y: 260, label: 'JB = t+A·n' },
+      G_KB: { type: 'or', x: 440, y: 400, label: 'KB = t+n' },
+      G_JC: { type: 'or', x: 440, y: 500, inputs: 3, label: 'JC = A+B+D' },
+      G_JD: { type: 'nor', x: 440, y: 620, inputs: 3, label: "JD = A'B'C'" },
+      FFA: { type: 'jkff', x: 760, y: 160, label: 'FF A (Q3)', q: 0 },
+      FFB: { type: 'jkff', x: 760, y: 320, label: 'FF B (Q2)', q: 0 },
+      FFC: { type: 'jkff', x: 760, y: 480, label: 'FF C (Q1)', q: 0 },
+      FFD: { type: 'jkff', x: 760, y: 640, label: 'FF D (Q0)', q: 0 },
+      LED_A: { type: 'led', x: 980, y: 160, label: 'A (8)' },
+      LED_B: { type: 'led', x: 980, y: 320, label: 'B (4)' },
+      LED_C: { type: 'led', x: 980, y: 480, label: 'C (2)' },
+      LED_D: { type: 'led', x: 980, y: 640, label: 'D (1)' },
+      SEG: { type: 'sevenseg', x: 1120, y: 360, label: 'Hex 0–A' }
+    },
+    wires: [
+      ['FFC.q', 'G_T.in1', fb.FFC], ['FFD.q', 'G_T.in2', fb.FFD],
+      ['FFC.q', 'G_N.in1', fb.FFC], ['FFD.q', 'G_N.in2', fb.FFD],
+      ['FFB.q', 'G_JA.in1', fb.FFB], ['G_T.out', 'G_JA.in2', { midX: 396 }],
+      ['FFA.q', 'G_AN.in1', fb.FFA], ['G_N.out', 'G_AN.in2', { midX: 412 }],
+      ['G_T.out', 'G_JB.in1', { midX: 540 }], ['G_AN.out', 'G_JB.in2', { midX: 554 }],
+      ['G_T.out', 'G_KB.in1', { midX: 396 }], ['G_N.out', 'G_KB.in2', { midX: 412 }],
+      ['FFA.q', 'G_JC.in1', fb.FFA], ['FFB.q', 'G_JC.in2', fb.FFB], ['FFD.q', 'G_JC.in3', fb.FFD],
+      ['FFA.q', 'G_JD.in1', fb.FFA], ['FFB.q', 'G_JD.in2', fb.FFB], ['FFC.q', 'G_JD.in3', fb.FFC],
+      ['G_JA.out', 'FFA.j', { midX: 680 }], ['CLK.out', 'FFA.clk', clkRoute], ['G_N.out', 'FFA.k', { routeY: 244, outX: 412, inX: 700 }],
+      ['G_JB.out', 'FFB.j', { midX: 700 }], ['CLK.out', 'FFB.clk', clkRoute], ['G_KB.out', 'FFB.k', { midX: 684 }],
+      ['G_JC.out', 'FFC.j', { midX: 684 }], ['CLK.out', 'FFC.clk', clkRoute], ['VCC.out', 'FFC.k', { midX: 684 }],
+      ['G_JD.out', 'FFD.j', { midX: 684 }], ['CLK.out', 'FFD.clk', clkRoute], ['FFA.q', 'FFD.k', { routeY: 76, outX: 896, inX: 736 }],
+      ['FFA.q', 'LED_A.in', { midX: 952 }], ['FFB.q', 'LED_B.in', { midX: 952 }],
+      ['FFC.q', 'LED_C.in', { midX: 952 }], ['FFD.q', 'LED_D.in', { midX: 952 }],
+      ['FFA.q', 'SEG.a', { midX: 1080 }], ['FFB.q', 'SEG.b', { midX: 1068 }],
+      ['FFC.q', 'SEG.c', { midX: 1068 }], ['FFD.q', 'SEG.d', { midX: 1080 }]
+    ]
+  };
+}
+
+function buildLift15Spec() {
+  const s1 = {
+    A: { routeY: 76, outX: 1424, inX: 204 },
+    B: { routeY: 90, outX: 1438, inX: 216 },
+    C: { routeY: 104, outX: 1452, inX: 228 },
+    D: { routeY: 118, outX: 1466, inX: 240 }
+  };
+  const s2 = {
+    A: { routeY: 76, outX: 1424, inX: 564 },
+    B: { routeY: 90, outX: 1438, inX: 574 },
+    C: { routeY: 104, outX: 1452, inX: 584 },
+    D: { routeY: 118, outX: 1466, inX: 594 },
+    Bb: { routeY: 132, outX: 1480, inX: 604 },
+    Cb: { routeY: 146, outX: 1494, inX: 614 },
+    Db: { routeY: 160, outX: 1508, inX: 624 }
+  };
+  const s2b = {
+    A: { routeY: 76, outX: 1424, inX: 764 },
+    Db: { routeY: 160, outX: 1508, inX: 778 }
+  };
+  const rX = { routeY: 1560, outX: 148, inX: 1044 };
+  const rP = { routeY: 1576, outX: 162, inX: 1058 };
+  const rC = { routeY: 1592, outX: 176, inX: 1264 };
+
+  return {
+    title: 'Soal 3 — Lift 15 Lantai (4× D FF + 4× MUX 4:1)',
+    components: {
+      NOTE_TITLE: { type: 'label', x: 40, y: 20, label: 'SOAL 3 · Lift 15 Lantai (4× D FF + 4× MUX 4:1 + 37 Gerbang)' },
+      LBL_IN: { type: 'label', x: 40, y: 180, label: 'Masukan: Arah X, Pemercepat P, CLK' },
+      LBL_S1: { type: 'label', x: 300, y: 180, label: 'Tahap 1 · Suku K-map Bersama' },
+      LBL_S2: { type: 'label', x: 640, y: 180, label: 'Tahap 2 · 4 Blok Mode (I0–I3)' },
+      LBL_MUX: { type: 'label', x: 1040, y: 180, label: 'Tahap 3 · 4× MUX 4:1 (S1=X, S0=P)' },
+      LBL_FF: { type: 'label', x: 1300, y: 180, label: 'Tahap 4 · Register Lantai (4× D FF)' },
+
+      SW_X: { type: 'switch', x: 40, y: 240, label: 'X (1=Naik)', on: true },
+      SW_P: { type: 'switch', x: 40, y: 340, label: 'P (1=3 Lantai)', on: false },
+      CLK: { type: 'clock', x: 40, y: 440, label: 'CLK 1 Hz' },
+
+      G_AB: { type: 'and', x: 300, y: 220, label: 'A·B' },
+      G_ORAB: { type: 'or', x: 300, y: 300, label: 'A+B' },
+      G_NORAB: { type: 'nor', x: 300, y: 380, label: "A'B'" },
+      G_CD: { type: 'and', x: 300, y: 480, label: 'C·D' },
+      G_NCD: { type: 'nand', x: 300, y: 560, label: "(C·D)'" },
+      G_CORD: { type: 'or', x: 300, y: 640, label: 'C+D' },
+      G_CXOR: { type: 'xor', x: 300, y: 740, label: 'C⊕D' },
+      G_CXNOR: { type: 'xnor', x: 300, y: 840, label: 'C⊙D' },
+
+      G_BCD: { type: 'and', x: 460, y: 480, label: 'B·C·D' },
+      U1_B1: { type: 'or', x: 460, y: 560, label: "A+(CD)'" },
+      G_B_CD: { type: 'and', x: 460, y: 640, label: 'B(C+D)' },
+
+      D1_A1: { type: 'or', x: 640, y: 220, label: 'B+C+D' },
+      D1_A: { type: 'and', x: 800, y: 220, label: 'T1·DA' },
+      D1_B1: { type: 'nor', x: 640, y: 300, inputs: 3, label: "B'C'D'" },
+      D1_B: { type: 'or', x: 800, y: 300, label: 'T1·DB' },
+      D1_D1: { type: 'nor', x: 640, y: 380, inputs: 3, label: "A'B'C'" },
+      D1_D: { type: 'or', x: 800, y: 380, label: 'T1·DD' },
+
+      D3_A1: { type: 'and', x: 640, y: 480, label: 'A·C·D' },
+      D3_A: { type: 'or', x: 800, y: 480, label: 'T3·DA' },
+      D3_B1: { type: 'and', x: 640, y: 560, inputs: 3, label: "AB'(CD)'" },
+      D3_B: { type: 'or', x: 800, y: 560, label: 'T3·DB' },
+      D3_C: { type: 'and', x: 800, y: 640, label: 'T3·DC' },
+      D3_D: { type: 'or', x: 800, y: 720, label: 'T3·DD' },
+
+      U1_A: { type: 'or', x: 800, y: 800, label: 'N1·DA' },
+      U1_B2: { type: 'and', x: 640, y: 880, label: "B(A+(CD)')" },
+      U1_B3: { type: 'and', x: 640, y: 960, label: "B'·C·D" },
+      U1_B: { type: 'or', x: 800, y: 900, label: 'N1·DB' },
+      U1_C1: { type: 'and', x: 640, y: 1040, label: 'A·B·D' },
+      U1_C: { type: 'or', x: 800, y: 1040, label: 'N1·DC' },
+      U1_D1: { type: 'and', x: 640, y: 1120, label: 'A·B·C' },
+      U1_D: { type: 'or', x: 800, y: 1120, label: 'N1·DD' },
+
+      U3_A: { type: 'or', x: 800, y: 1200, label: 'N3·DA' },
+      U3_B1: { type: 'and', x: 640, y: 1280, label: 'A(C+D)' },
+      U3_B2: { type: 'and', x: 640, y: 1360, inputs: 3, label: "B·C'·D'" },
+      U3_B: { type: 'or', x: 800, y: 1300, inputs: 3, label: 'N3·DB' },
+      U3_C: { type: 'or', x: 800, y: 1380, label: 'N3·DC' },
+      U3_D: { type: 'or', x: 800, y: 1460, label: 'N3·DD' },
+
+      MUX_A: { type: 'mux4', x: 1080, y: 240, label: 'MUX A' },
+      MUX_B: { type: 'mux4', x: 1080, y: 460, label: 'MUX B' },
+      MUX_C: { type: 'mux4', x: 1080, y: 680, label: 'MUX C' },
+      MUX_D: { type: 'mux4', x: 1080, y: 900, label: 'MUX D' },
+
+      FFA: { type: 'dff', x: 1300, y: 260, label: 'FF A (Q3)', q: 0, initQ: 0 },
+      FFB: { type: 'dff', x: 1300, y: 480, label: 'FF B (Q2)', q: 0, initQ: 0 },
+      FFC: { type: 'dff', x: 1300, y: 700, label: 'FF C (Q1)', q: 0, initQ: 0 },
+      FFD: { type: 'dff', x: 1300, y: 920, label: 'FF D (Q0)', q: 1, initQ: 1 },
+
+      LED_A: { type: 'led', x: 1560, y: 260, label: 'A (8)' },
+      LED_B: { type: 'led', x: 1560, y: 480, label: 'B (4)' },
+      LED_C: { type: 'led', x: 1560, y: 700, label: 'C (2)' },
+      LED_D: { type: 'led', x: 1560, y: 920, label: 'D (1)' },
+      SEG: { type: 'sevenseg', x: 1700, y: 520, label: 'Lantai 1–F' }
+    },
+    wires: [
+      ['FFA.q', 'G_AB.in1', s1.A], ['FFB.q', 'G_AB.in2', s1.B],
+      ['FFA.q', 'G_ORAB.in1', s1.A], ['FFB.q', 'G_ORAB.in2', s1.B],
+      ['FFA.q', 'G_NORAB.in1', s1.A], ['FFB.q', 'G_NORAB.in2', s1.B],
+      ['FFC.q', 'G_CD.in1', s1.C], ['FFD.q', 'G_CD.in2', s1.D],
+      ['FFC.q', 'G_NCD.in1', s1.C], ['FFD.q', 'G_NCD.in2', s1.D],
+      ['FFC.q', 'G_CORD.in1', s1.C], ['FFD.q', 'G_CORD.in2', s1.D],
+      ['FFC.q', 'G_CXOR.in1', s1.C], ['FFD.q', 'G_CXOR.in2', s1.D],
+      ['FFC.q', 'G_CXNOR.in1', s1.C], ['FFD.q', 'G_CXNOR.in2', s1.D],
+
+      ['FFB.q', 'G_BCD.in1', { routeY: 90, outX: 1438, inX: 432 }], ['G_CD.out', 'G_BCD.in2', { midX: 416 }],
+      ['FFA.q', 'U1_B1.in1', { routeY: 76, outX: 1424, inX: 444 }], ['G_NCD.out', 'U1_B1.in2', { midX: 416 }],
+      ['FFB.q', 'G_B_CD.in1', { routeY: 90, outX: 1438, inX: 432 }], ['G_CORD.out', 'G_B_CD.in2', { midX: 416 }],
+
+      ['FFB.q', 'D1_A1.in1', s2.B], ['G_CORD.out', 'D1_A1.in2', { midX: 520 }],
+      ['FFA.q', 'D1_A.in1', s2b.A], ['D1_A1.out', 'D1_A.in2', { midX: 750 }],
+      ['FFB.q', 'D1_B1.in1', s2.B], ['FFC.q', 'D1_B1.in2', s2.C], ['FFD.q', 'D1_B1.in3', s2.D],
+      ['G_B_CD.out', 'D1_B.in1', { midX: 740 }], ['D1_B1.out', 'D1_B.in2', { midX: 750 }],
+      ['FFC.q', 'D1_D1.in3', s2.C], ['FFA.q', 'D1_D1.in1', s2.A], ['FFB.q', 'D1_D1.in2', s2.B],
+      ['FFD.qbar', 'D1_D.in1', s2b.Db], ['D1_D1.out', 'D1_D.in2', { midX: 750 }],
+
+      ['FFA.q', 'D3_A1.in1', s2.A], ['G_CD.out', 'D3_A1.in2', { midX: 404 }],
+      ['G_AB.out', 'D3_A.in1', { midX: 536 }], ['D3_A1.out', 'D3_A.in2', { midX: 750 }],
+      ['FFA.q', 'D3_B1.in1', s2.A], ['FFB.qbar', 'D3_B1.in2', s2.Bb], ['G_NCD.out', 'D3_B1.in3', { midX: 544 }],
+      ['G_BCD.out', 'D3_B.in1', { midX: 740 }], ['D3_B1.out', 'D3_B.in2', { midX: 750 }],
+      ['G_ORAB.out', 'D3_C.in1', { midX: 528 }], ['G_CXOR.out', 'D3_C.in2', { midX: 544 }],
+      ['FFD.qbar', 'D3_D.in1', s2b.Db], ['G_NORAB.out', 'D3_D.in2', { midX: 552 }],
+
+      ['FFA.q', 'U1_A.in1', s2b.A], ['G_BCD.out', 'U1_A.in2', { midX: 740 }],
+      ['FFB.q', 'U1_B2.in1', s2.B], ['U1_B1.out', 'U1_B2.in2', { midX: 556 }],
+      ['FFB.qbar', 'U1_B3.in1', s2.Bb], ['G_CD.out', 'U1_B3.in2', { midX: 404 }],
+      ['U1_B2.out', 'U1_B.in1', { midX: 750 }], ['U1_B3.out', 'U1_B.in2', { midX: 750 }],
+      ['G_AB.out', 'U1_C1.in1', { midX: 536 }], ['FFD.q', 'U1_C1.in2', s2.D],
+      ['G_CXOR.out', 'U1_C.in1', { midX: 544 }], ['U1_C1.out', 'U1_C.in2', { midX: 750 }],
+      ['G_AB.out', 'U1_D1.in1', { midX: 536 }], ['FFC.q', 'U1_D1.in2', s2.C],
+      ['FFD.qbar', 'U1_D.in1', s2b.Db], ['U1_D1.out', 'U1_D.in2', { midX: 750 }],
+
+      ['FFA.q', 'U3_A.in1', s2b.A], ['G_B_CD.out', 'U3_A.in2', { midX: 740 }],
+      ['FFA.q', 'U3_B1.in1', s2.A], ['G_CORD.out', 'U3_B1.in2', { midX: 520 }],
+      ['FFB.q', 'U3_B2.in1', s2.B], ['FFC.qbar', 'U3_B2.in2', s2.Cb], ['FFD.qbar', 'U3_B2.in3', s2.Db],
+      ['U3_B1.out', 'U3_B.in1', { midX: 750 }], ['G_NORAB.out', 'U3_B.in2', { midX: 552 }], ['U3_B2.out', 'U3_B.in3', { midX: 750 }],
+      ['G_AB.out', 'U3_C.in1', { midX: 536 }], ['G_CXNOR.out', 'U3_C.in2', { midX: 544 }],
+      ['FFD.qbar', 'U3_D.in1', s2b.Db], ['G_AB.out', 'U3_D.in2', { midX: 536 }],
+
+      ['D1_A.out', 'MUX_A.i0', { midX: 904 }], ['D3_A.out', 'MUX_A.i1', { midX: 912 }],
+      ['U1_A.out', 'MUX_A.i2', { midX: 920 }], ['U3_A.out', 'MUX_A.i3', { midX: 928 }],
+      ['SW_X.out', 'MUX_A.s1', rX], ['SW_P.out', 'MUX_A.s0', rP],
+
+      ['D1_B.out', 'MUX_B.i0', { midX: 936 }], ['D3_B.out', 'MUX_B.i1', { midX: 944 }],
+      ['U1_B.out', 'MUX_B.i2', { midX: 952 }], ['U3_B.out', 'MUX_B.i3', { midX: 960 }],
+      ['SW_X.out', 'MUX_B.s1', rX], ['SW_P.out', 'MUX_B.s0', rP],
+
+      ['G_CXNOR.out', 'MUX_C.i0', { midX: 968 }], ['D3_C.out', 'MUX_C.i1', { midX: 976 }],
+      ['U1_C.out', 'MUX_C.i2', { midX: 984 }], ['U3_C.out', 'MUX_C.i3', { midX: 992 }],
+      ['SW_X.out', 'MUX_C.s1', rX], ['SW_P.out', 'MUX_C.s0', rP],
+
+      ['D1_D.out', 'MUX_D.i0', { midX: 1000 }], ['D3_D.out', 'MUX_D.i1', { midX: 1008 }],
+      ['U1_D.out', 'MUX_D.i2', { midX: 1016 }], ['U3_D.out', 'MUX_D.i3', { midX: 1024 }],
+      ['SW_X.out', 'MUX_D.s1', rX], ['SW_P.out', 'MUX_D.s0', rP],
+
+      ['MUX_A.out', 'FFA.d', { midX: 1228 }], ['CLK.out', 'FFA.clk', rC],
+      ['MUX_B.out', 'FFB.d', { midX: 1228 }], ['CLK.out', 'FFB.clk', rC],
+      ['MUX_C.out', 'FFC.d', { midX: 1228 }], ['CLK.out', 'FFC.clk', rC],
+      ['MUX_D.out', 'FFD.d', { midX: 1228 }], ['CLK.out', 'FFD.clk', rC],
+
+      ['FFA.q', 'LED_A.in', { midX: 1534 }], ['FFB.q', 'LED_B.in', { midX: 1534 }],
+      ['FFC.q', 'LED_C.in', { midX: 1534 }], ['FFD.q', 'LED_D.in', { midX: 1534 }],
+      ['FFA.q', 'SEG.a', { midX: 1666 }], ['FFB.q', 'SEG.b', { midX: 1652 }],
+      ['FFC.q', 'SEG.c', { midX: 1652 }], ['FFD.q', 'SEG.d', { midX: 1666 }]
+    ]
+  };
+}
+
 const TEMPLATES = {
   half: {
     title: 'Half Adder',
@@ -2490,6 +2939,8 @@ const TEMPLATES = {
     },
     wires: [['A.out', 'SEG.a'], ['B.out', 'SEG.b'], ['C.out', 'SEG.c'], ['D.out', 'SEG.d']]
   },
+  counter11: buildCounter11Spec(),
+  lift15: buildLift15Spec(),
   empty: { title: 'Rangkaian Tanpa Judul', components: {}, wires: [] }
 };
 function loadTemplate(key, opts = {}) {
@@ -2503,17 +2954,29 @@ function loadTemplate(key, opts = {}) {
   for (const [keyName, item] of Object.entries(spec.components)) {
     const c = makeComponent(item.type, item.x, item.y, item);
     if (!c) continue;
-    if (item.q !== undefined) c.q = item.q ? 1 : 0;
+    if (opts.ffStates && Object.prototype.hasOwnProperty.call(opts.ffStates, keyName)) {
+      c.q = opts.ffStates[keyName] ? 1 : 0;
+    } else if (item.q !== undefined) {
+      c.q = item.q ? 1 : 0;
+    }
+    if (opts.switches && Object.prototype.hasOwnProperty.call(opts.switches, keyName)) {
+      c.on = !!opts.switches[keyName];
+    }
     map[keyName] = c.id;
     S.components.push(c);
   }
-  for (const [from, to] of spec.wires) {
+  for (const wireItem of spec.wires) {
+    const [from, to, route] = wireItem;
     const [fk, fp] = from.split('.'), [tk, tp] = to.split('.');
     if (!map[fk] || !map[tk]) continue;
-    S.wires.push({ id: uid('w'), from: { c: map[fk], p: fp }, to: { c: map[tk], p: tp } });
+    const w = { id: uid('w'), from: { c: map[fk], p: fp }, to: { c: map[tk], p: tp } };
+    if (route && typeof route === 'object') w.route = { ...route };
+    S.wires.push(w);
   }
   S.title = spec.title;
   $('#circuit-title').value = S.title;
+  const mt = $('#asg-maker-title');
+  if (mt) mt.value = S.title;
   runSimulation();
   fitView();
   renderAll();
@@ -2530,9 +2993,12 @@ function sceneData() {
     components: S.components.map((c) => ({
       id: c.id, type: c.type, x: c.x, y: c.y, rot: c.rot || 0, label: c.label,
       ...(DEFS[c.type]?.hasInputs ? { inputs: c.inputs } : {}),
-      ...(c.on ? { on: true } : {}), ...(c.q ? { q: 1 } : {})
+      ...(c.on ? { on: true } : {}), ...(c.q ? { q: 1 } : {}), ...(c.initQ ? { initQ: 1 } : {})
     })),
-    wires: S.wires.map((w) => ({ id: w.id, from: { c: w.from.c, p: w.from.p }, to: { c: w.to.c, p: w.to.p } }))
+    wires: S.wires.map((w) => ({
+      id: w.id, from: { c: w.from.c, p: w.from.p }, to: { c: w.to.c, p: w.to.p },
+      ...(w.route ? { route: w.route } : {})
+    }))
   };
 }
 function normalizeScene(data) {
@@ -2553,7 +3019,7 @@ function normalizeScene(data) {
       y: Number.isFinite(+raw.y) ? snap(+raw.y) : 80 + (n % 4) * 120,
       rot: [0, 90, 180, 270].includes(+raw.rot) ? +raw.rot : 0,
       label: typeof raw.label === 'string' ? raw.label : autoLabel(type),
-      on: !!raw.on, q: raw.q ? 1 : 0
+      on: !!raw.on, q: raw.q ? 1 : 0, initQ: raw.initQ ? 1 : 0
     };
     if (def.hasInputs) c.inputs = clamp(+raw.inputs || def.defaultInputs || 2, 2, 4);
     comps.push(c);
@@ -2563,8 +3029,8 @@ function normalizeScene(data) {
   for (const raw of Array.isArray(data.wires) ? data.wires : []) {
     let from = raw?.from, to = raw?.to;
     if (!from || !to) continue;
-    const fc = comps.find((c) => c.id === idMap.get(String(from.c)));
-    const tc = comps.find((c) => c.id === idMap.get(String(to.c)));
+    let fc = comps.find((c) => c.id === idMap.get(String(from.c)));
+    let tc = comps.find((c) => c.id === idMap.get(String(to.c)));
     if (!fc || !tc) continue;
     let fp = DEFS[fc.type].ports(fc).find((p) => p.id === from.p);
     let tp = DEFS[tc.type].ports(tc).find((p) => p.id === to.p);
@@ -2575,7 +3041,9 @@ function normalizeScene(data) {
     const targetKey = tc.id + ':' + tp.id;
     if (usedInputs.has(targetKey)) continue;
     usedInputs.add(targetKey);
-    wires.push({ id: 'w' + (wires.length + 1), from: { c: fc.id, p: fp.id }, to: { c: tc.id, p: tp.id } });
+    const w = { id: 'w' + (wires.length + 1), from: { c: fc.id, p: fp.id }, to: { c: tc.id, p: tp.id } };
+    if (raw.route && typeof raw.route === 'object') w.route = { ...raw.route };
+    wires.push(w);
   }
   S.uid = comps.length + wires.length + 2;
   return { components: comps, wires, title: typeof data.title === 'string' ? data.title : 'Rangkaian Tanpa Judul', view: data.view };
@@ -2587,6 +3055,8 @@ function applyScene(data, opts = {}) {
   S.wires = clean.wires;
   S.title = clean.title;
   $('#circuit-title').value = S.title;
+  const mt = $('#asg-maker-title');
+  if (mt) mt.value = S.title;
   S.selection.clear();
   S.ticks = 0;
   S.unstable = false;
@@ -2607,8 +3077,14 @@ function checkpoint() {
   updateHistoryButtons();
 }
 function updateHistoryButtons() {
-  $('#btn-undo').disabled = history.undo.length === 0;
-  $('#btn-redo').disabled = history.redo.length === 0;
+  const u = history.undo.length === 0;
+  const r = history.redo.length === 0;
+  $('#btn-undo').disabled = u;
+  $('#btn-redo').disabled = r;
+  const mu = $('#asg-maker-undo');
+  const mr = $('#asg-maker-redo');
+  if (mu) mu.disabled = u;
+  if (mr) mr.disabled = r;
 }
 function doUndo() {
   if (!history.undo.length) return;
@@ -3241,9 +3717,13 @@ function onDocumentPointerMove(e) {
       checkpoint();
     }
     const sdx = snap(dx), sdy = snap(dy);
+    const movedIds = new Set(inter.comps.map((o) => o.id));
     for (const orig of inter.comps) {
       const c = getComp(orig.id);
       if (c) { c.x = orig.x + sdx; c.y = orig.y + sdy; }
+    }
+    for (const w of S.wires) {
+      if (w.route && (movedIds.has(w.from.c) || movedIds.has(w.to.c))) delete w.route;
     }
     renderAll({ inspector: false });
     return;
@@ -3373,7 +3853,7 @@ function stopRunning(silent = false) {
 function resetSimulation() {
   stopRunning(true);
   for (const c of S.components) {
-    if (['dff', 'tff', 'jkff'].includes(c.type)) { c.q = 0; c._prevClk = undefined; }
+    if (['dff', 'tff', 'jkff'].includes(c.type)) { c.q = c.initQ ? 1 : 0; c._prevClk = undefined; }
     if (c.type === 'clock') c.on = false;
   }
   S.ticks = 0;
@@ -3443,6 +3923,8 @@ function newScene() {
   S.components = []; S.wires = []; S.selection.clear();
   S.ticks = 0; S.unstable = false; S.title = 'Rangkaian Tanpa Judul';
   $('#circuit-title').value = S.title;
+  const mt = $('#asg-maker-title');
+  if (mt) mt.value = S.title;
   fitView();
   runSimulation();
   renderAll();
@@ -3551,7 +4033,7 @@ function bindUI() {
 /* Papan ketik                                                         */
 /* ------------------------------------------------------------------ */
 document.addEventListener('keydown', (e) => {
-  if (document.body.classList.contains('assign-open')) return;
+  if (document.body.classList.contains('assign-open') && !document.body.classList.contains('assign-maker-open')) return;
   const active = document.activeElement;
   const typing = active && (/^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName) || active.isContentEditable);
   const mod = e.metaKey || e.ctrlKey;
@@ -3613,6 +4095,376 @@ document.addEventListener('keyup', (e) => {
     canvasWrap.classList.remove('space-pan');
   }
 });
+
+/* ------------------------------------------------------------------ */
+/* Simulator netlist terisolasi & penampil skema tertanam             */
+/* ------------------------------------------------------------------ */
+function createCircuitState(spec) {
+  const st = {
+    title: spec?.title || 'Rangkaian',
+    components: [],
+    wires: [],
+    keyMap: {},
+    outValues: {},
+    inValues: {},
+    unstable: false
+  };
+  let cid = 1, wid = 1;
+  for (const [keyName, item] of Object.entries(spec?.components || {})) {
+    const def = DEFS[item.type];
+    if (!def) continue;
+    const c = {
+      id: 'm' + (cid++),
+      _key: keyName,
+      type: item.type,
+      x: snap(item.x),
+      y: snap(item.y),
+      rot: item.rot || 0,
+      label: item.label !== undefined ? String(item.label) : autoLabel(item.type),
+      on: !!item.on,
+      q: item.q ? 1 : 0,
+      initQ: item.initQ ? 1 : 0
+    };
+    if (def.hasInputs) c.inputs = clamp(+item.inputs || def.defaultInputs || 2, 2, 4);
+    st.keyMap[keyName] = c.id;
+    st.components.push(c);
+  }
+  for (const wireItem of spec?.wires || []) {
+    const [from, to, route] = wireItem;
+    const [fk, fp] = from.split('.'), [tk, tp] = to.split('.');
+    if (!st.keyMap[fk] || !st.keyMap[tk]) continue;
+    const w = {
+      id: 'mw' + (wid++),
+      from: { c: st.keyMap[fk], p: fp },
+      to: { c: st.keyMap[tk], p: tp }
+    };
+    if (route && typeof route === 'object') w.route = { ...route };
+    st.wires.push(w);
+  }
+  simulateCircuit(st);
+  return st;
+}
+
+function simulateCircuit(st, depth = 0) {
+  const comps = st.components;
+  if (!comps.length) {
+    st.outValues = {}; st.inValues = {}; st.unstable = false;
+    return;
+  }
+  let out = {};
+  let inputs = {};
+  let stable = false;
+  for (let iter = 0; iter < 120; iter++) {
+    inputs = {};
+    for (const c of comps) inputs[c.id] = {};
+    for (const w of st.wires) {
+      const v = !!(out[w.from.c] && out[w.from.c][w.from.p]);
+      w._v = v;
+      const target = inputs[w.to.c];
+      if (!target) continue;
+      target[w.to.p] = target[w.to.p] === undefined ? v : (target[w.to.p] || v);
+    }
+    const next = {};
+    for (const c of comps) {
+      const def = DEFS[c.type];
+      next[c.id] = def ? (def.eval(c, inputs[c.id] || {}) || {}) : {};
+    }
+    stable = true;
+    for (const c of comps) {
+      const a = out[c.id] || {};
+      const b = next[c.id] || {};
+      for (const key of new Set([...Object.keys(a), ...Object.keys(b)])) {
+        if (!!a[key] !== !!b[key]) { stable = false; break; }
+      }
+      if (!stable) break;
+    }
+    out = next;
+    if (stable) break;
+  }
+  inputs = {};
+  for (const c of comps) inputs[c.id] = {};
+  for (const w of st.wires) {
+    const v = !!(out[w.from.c] && out[w.from.c][w.from.p]);
+    w._v = v;
+    const target = inputs[w.to.c];
+    if (target) target[w.to.p] = target[w.to.p] === undefined ? v : (target[w.to.p] || v);
+  }
+  st.outValues = out;
+  st.inValues = inputs;
+  st.unstable = !stable;
+
+  let edgeChanged = false;
+  for (const c of comps) {
+    if (!['dff', 'tff', 'jkff'].includes(c.type)) continue;
+    const inp = inputs[c.id] || {};
+    const clk = !!inp.clk;
+    if (c._prevClk === undefined) {
+      c._prevClk = clk;
+    } else if (clk && !c._prevClk) {
+      let nextQ = c.q ? 1 : 0;
+      if (c.type === 'dff') nextQ = inp.d ? 1 : 0;
+      else if (c.type === 'tff') nextQ = inp.t ? (c.q ? 0 : 1) : (c.q ? 1 : 0);
+      else nextQ = jkNext(c.q ? 1 : 0, !!inp.j, !!inp.k);
+      if (!!nextQ !== !!c.q) { c.q = nextQ; edgeChanged = true; }
+    }
+    c._prevClk = clk;
+  }
+  if (edgeChanged && depth < 8) simulateCircuit(st, depth + 1);
+}
+
+function pulseCircuitClock(st) {
+  for (const c of st.components) if (c.type === 'clock') c.on = true;
+  simulateCircuit(st);
+  for (const c of st.components) if (c.type === 'clock') c.on = false;
+  simulateCircuit(st);
+}
+
+class MiniCircuitView {
+  constructor(containerSel, spec, opts = {}) {
+    this.container = typeof containerSel === 'string' ? $(containerSel) : containerSel;
+    this.opts = opts;
+    this.id = opts.id || 'mini-' + Math.random().toString(36).slice(2, 8);
+    this.st = createCircuitState(spec);
+    this.view = { x: 20, y: 20, zoom: 1 };
+    this.showValues = opts.showValues !== false;
+    this.pan = null;
+    this.mount();
+  }
+  mount() {
+    if (!this.container) return;
+    const smId = `mini-dotsSmall-${this.id}`;
+    const lgId = `mini-dotsLarge-${this.id}`;
+    this.container.innerHTML = `<svg class="mini-board" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(this.st.title)}">
+      <defs>
+        <pattern id="${smId}" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="0" cy="0" r="1.05" fill="#d4d4d8"/></pattern>
+        <pattern id="${lgId}" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="0" cy="0" r="1.6" fill="#a1a1aa"/></pattern>
+      </defs>
+      <g class="mini-vp">
+        <g pointer-events="none">
+          <rect x="-30000" y="-30000" width="60000" height="60000" fill="url(#${smId})"/>
+          <rect x="-30000" y="-30000" width="60000" height="60000" fill="url(#${lgId})"/>
+        </g>
+        <g class="mini-wires"></g>
+        <g class="mini-comps"></g>
+        <g class="mini-overlay"></g>
+      </g>
+    </svg>`;
+    this.svg = $('.mini-board', this.container);
+    this.vp = $('.mini-vp', this.svg);
+    this.wiresLayer = $('.mini-wires', this.svg);
+    this.compsLayer = $('.mini-comps', this.svg);
+    this.overlayLayer = $('.mini-overlay', this.svg);
+    this.bindEvents();
+    this.render();
+    this.fitView();
+  }
+  compById(id) {
+    return this.st.components.find((c) => c.id === id);
+  }
+  bounds(pad = 44) {
+    if (!this.st.components.length) return { x: 0, y: 0, w: 800, h: 520 };
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const c of this.st.components) {
+      const b = compBounds(c);
+      if (!b) continue;
+      minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
+      maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
+    }
+    return { x: minX - pad, y: minY - pad, w: (maxX - minX) + pad * 2, h: (maxY - minY) + pad * 2 };
+  }
+  applyViewport() {
+    if (!this.vp) return;
+    this.vp.setAttribute('transform', `translate(${fnum(this.view.x)} ${fnum(this.view.y)}) scale(${this.view.zoom})`);
+    if (this.opts.onZoomChange) this.opts.onZoomChange(Math.round(this.view.zoom * 100));
+  }
+  fitView() {
+    if (!this.svg) return;
+    const r = this.svg.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const b = this.bounds(38);
+    const zoom = clamp(Math.min((r.width - 20) / b.w, (r.height - 20) / b.h), 0.16, 1.3);
+    this.view.zoom = zoom;
+    this.view.x = r.width / 2 - (b.x + b.w / 2) * zoom;
+    this.view.y = r.height / 2 - (b.y + b.h / 2) * zoom;
+    this.applyViewport();
+    this.renderOverlay();
+  }
+  zoomAt(clientX, clientY, nextZoom) {
+    const z = clamp(nextZoom, 0.16, 2.2);
+    const r = this.svg.getBoundingClientRect();
+    const sx = clientX - r.left, sy = clientY - r.top;
+    const wx = (sx - this.view.x) / this.view.zoom;
+    const wy = (sy - this.view.y) / this.view.zoom;
+    this.view.zoom = z;
+    this.view.x = sx - wx * z;
+    this.view.y = sy - wy * z;
+    this.applyViewport();
+    this.renderOverlay();
+  }
+  zoomBy(factor) {
+    if (!this.svg) return;
+    const r = this.svg.getBoundingClientRect();
+    this.zoomAt(r.left + r.width / 2, r.top + r.height / 2, this.view.zoom * factor);
+  }
+  setShowValues(show) {
+    this.showValues = !!show;
+    this.renderOverlay();
+  }
+  syncState({ ffStates, switches } = {}) {
+    for (const c of this.st.components) {
+      if (['dff', 'tff', 'jkff'].includes(c.type)) {
+        if (ffStates && Object.prototype.hasOwnProperty.call(ffStates, c._key)) {
+          c.q = ffStates[c._key] ? 1 : 0;
+        }
+        c._prevClk = false;
+      }
+      if (c.type === 'clock') c.on = false;
+      if (c.type === 'switch' && switches && Object.prototype.hasOwnProperty.call(switches, c._key)) {
+        c.on = !!switches[c._key];
+      }
+    }
+    simulateCircuit(this.st);
+    this.render();
+  }
+  renderWireMarkup(w) {
+    const d = wirePath(w, (id) => this.compById(id));
+    if (!d) return '';
+    const high = !!w._v;
+    return `<g class="wire ${high ? 'high' : ''}"><path class="wire-line" d="${d}"/>${high ? `<path class="wire-flow" d="${d}"/>` : ''}</g>`;
+  }
+  renderCompMarkup(c) {
+    const def = DEFS[c.type];
+    if (!def) return '';
+    const ports = def.ports(c);
+    const lit = c.type === 'led' && c._lit;
+    const interactive = (c.type === 'clock' || c.type === 'switch') ? '1' : '0';
+    let portMarkup = '';
+    for (const p of ports) {
+      const val = p.dir === 'out' ? this.st.outValues[c.id]?.[p.id] : this.st.inValues[c.id]?.[p.id];
+      portMarkup += `<circle class="port ${p.dir} ${val ? 'high' : ''}" cx="${p.x}" cy="${p.y}" r="4.3"><title>${p.id}</title></circle>`;
+    }
+    const fmtLabel = (txt) => esc(txt).replace(/(.)\u0304/g, '<tspan text-decoration="overline">$1</tspan>');
+    const labelRot = c.rot ? ` transform="rotate(${-c.rot} ${def.w / 2} -8)"` : '';
+    const label = (!def.noLabel && c.label)
+      ? `<text class="comp-label" x="${def.w / 2}" y="-5" text-anchor="middle"${labelRot}>${fmtLabel(c.label)}</text>` : '';
+    return `<g class="comp ${lit ? 'lit' : ''}" data-comp="${c.id}" data-key="${esc(c._key)}" data-interactive="${interactive}" transform="translate(${c.x} ${c.y}) rotate(${c.rot || 0} ${def.w / 2} ${def.h / 2})">
+      <rect class="hit" x="0" y="0" width="${def.w}" height="${def.h}"/>
+      ${def.draw(c)}${label}${portMarkup}
+    </g>`;
+  }
+  renderOverlay() {
+    if (!this.overlayLayer) return;
+    if (!this.showValues || this.view.zoom < 0.35) {
+      this.overlayLayer.innerHTML = '';
+      return;
+    }
+    const connected = new Set();
+    for (const w of this.st.wires) connected.add(w.from.c + ':' + w.from.p);
+    let html = '';
+    for (const c of this.st.components) {
+      const def = DEFS[c.type];
+      if (!def) continue;
+      for (const p of def.ports(c)) {
+        if (p.dir !== 'out' || !connected.has(c.id + ':' + p.id)) continue;
+        const val = this.st.outValues[c.id]?.[p.id];
+        if (val === undefined) continue;
+        const m = portMeta(c, p.id);
+        if (!m) continue;
+        html += `<text class="portval ${val ? 'high' : ''}" x="${fnum(m.x + m.nx * 11)}" y="${fnum(m.y + m.ny * 11 + 3)}" text-anchor="middle">${val ? 1 : 0}</text>`;
+      }
+    }
+    this.overlayLayer.innerHTML = html;
+  }
+  render() {
+    if (!this.svg) return;
+    this.wiresLayer.innerHTML = this.st.wires.map((w) => this.renderWireMarkup(w)).join('');
+    this.compsLayer.innerHTML = this.st.components.map((c) => this.renderCompMarkup(c)).join('');
+    this.renderOverlay();
+  }
+  buildExportSVG() {
+    const b = this.bounds(34);
+    const titleH = 54, footer = 28;
+    const W = Math.max(420, Math.ceil(b.w));
+    const H = Math.max(260, Math.ceil(titleH + b.h + footer));
+    const tx = 26 - b.x, ty = titleH + 8 - b.y;
+    const wires = this.st.wires.map((w) => this.renderWireMarkup(w)).join('');
+    const comps = this.st.components.map((c) => this.renderCompMarkup(c)).join('');
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <style>${CIRCUIT_CSS}</style>
+  <rect width="${W}" height="${H}" fill="#ffffff"/>
+  <text x="26" y="31" font-family="Satoshi,-apple-system,Segoe UI,sans-serif" font-size="17" font-weight="700" fill="#0f172a">${esc(this.st.title)}</text>
+  <text x="${W - 26}" y="31" text-anchor="end" font-family="Satoshi,-apple-system,Segoe UI,sans-serif" font-size="11" font-weight="600" fill="#94a3b8">SirkuitLab</text>
+  <line x1="26" y1="43" x2="${W - 26}" y2="43" stroke="#e2e8f0"/>
+  <g transform="translate(${fnum(tx)} ${fnum(ty)})">${wires}${comps}</g>
+  <text x="${W - 26}" y="${H - 12}" text-anchor="end" font-family="Satoshi,-apple-system,Segoe UI,sans-serif" font-size="9" fill="#cbd5e1">Dibuat dengan SirkuitLab</text>
+</svg>`;
+  }
+  exportSVG(slug = 'rangkaian') {
+    downloadBlob(new Blob([this.buildExportSVG()], { type: 'image/svg+xml;charset=utf-8' }), slug + '.svg');
+    toast('Gambar SVG diunduh.');
+  }
+  exportPNG(slug = 'rangkaian') {
+    const svg = this.buildExportSVG();
+    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+    const img = new Image();
+    img.onload = () => {
+      const scale = 2;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.width * scale));
+      canvas.height = Math.max(1, Math.round(img.height * scale));
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob((out) => {
+        if (!out) { toast('Gagal membuat PNG.', 'err'); return; }
+        downloadBlob(out, slug + '.png');
+        toast('Gambar PNG diunduh.');
+      }, 'image/png');
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); toast('Gagal membuat PNG.', 'err'); };
+    img.src = url;
+  }
+  bindEvents() {
+    this.svg.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const factor = Math.exp(-e.deltaY * 0.0015);
+      this.zoomAt(e.clientX, e.clientY, this.view.zoom * factor);
+    }, { passive: false });
+    this.svg.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 && e.button !== 1) return;
+      this.pan = { x: e.clientX, y: e.clientY, vx: this.view.x, vy: this.view.y, moved: false, target: e.target };
+      this.container.classList.add('panning');
+      e.preventDefault();
+    });
+    document.addEventListener('pointermove', (e) => {
+      if (!this.pan) return;
+      const dx = e.clientX - this.pan.x, dy = e.clientY - this.pan.y;
+      if (!this.pan.moved && Math.hypot(dx, dy) > 4) this.pan.moved = true;
+      if (this.pan.moved) {
+        this.view.x = this.pan.vx + dx;
+        this.view.y = this.pan.vy + dy;
+        this.applyViewport();
+      }
+    });
+    document.addEventListener('pointerup', (e) => {
+      if (!this.pan) return;
+      const wasMoved = this.pan.moved;
+      const downTarget = this.pan.target;
+      this.pan = null;
+      this.container.classList.remove('panning');
+      if (!wasMoved) {
+        const compEl = downTarget?.closest?.('.comp');
+        if (compEl) {
+          const c = this.compById(compEl.dataset.comp);
+          if (c && c.type === 'clock' && this.opts.onClockClick) this.opts.onClockClick(c._key, c);
+          else if (c && c.type === 'switch' && this.opts.onSwitchClick) this.opts.onSwitchClick(c._key, c);
+        }
+      }
+    });
+  }
+}
 
 /* ------------------------------------------------------------------ */
 /* Mulai                                                               */
@@ -3992,6 +4844,270 @@ init();
   qa('[data-asg-tab]').forEach((b) => b.addEventListener('click', () => switchTab(b.dataset.asgTab)));
 
   const appEl = q('.app');
+  const topbarEl = q('.topbar', appEl);
+  const workbenchEl = q('.workbench');
+  const drawerBackdropEl = q('#drawer-backdrop');
+  const makerSlotEl = q('#asg-maker-slot');
+  const asgMainEl = q('.asg-main');
+
+  /* ---------------- Skema Gerbang Lengkap (Soal 2 & 3) ---------------- */
+  let counterView = null;
+  let liftView = null;
+  let activeTab = 'counter';
+
+  function bindMiniViewTools(prefix, getView, slug) {
+    const zoomLabel = q(`#${prefix}-zoom`);
+    const valBtn = q(`#${prefix}-val`);
+    const expBtn = q(`#${prefix}-expand`);
+    const stage = q(`#${prefix}-stage`);
+    q(`#${prefix}-in`)?.addEventListener('click', () => getView()?.zoomBy(1.22));
+    q(`#${prefix}-out`)?.addEventListener('click', () => getView()?.zoomBy(0.82));
+    q(`#${prefix}-fit`)?.addEventListener('click', () => getView()?.fitView());
+    valBtn?.addEventListener('click', () => {
+      const v = getView();
+      if (!v) return;
+      const next = !v.showValues;
+      v.setShowValues(next);
+      valBtn.classList.toggle('on', next);
+    });
+    expBtn?.addEventListener('click', () => {
+      if (!stage) return;
+      const expanded = stage.classList.toggle('expanded');
+      expBtn.classList.toggle('on', expanded);
+      expBtn.textContent = expanded ? 'Perkecil' : 'Perbesar';
+      requestAnimationFrame(() => getView()?.fitView());
+    });
+    q(`#${prefix}-svg`)?.addEventListener('click', () => getView()?.exportSVG(slug));
+    q(`#${prefix}-png`)?.addEventListener('click', () => getView()?.exportPNG(slug));
+    return (pct) => { if (zoomLabel) zoomLabel.textContent = pct + '%'; };
+  }
+
+  const onCounterZoom = bindMiniViewTools('ac-sch', () => counterView, 'soal-2-counter-mod11');
+  const onLiftZoom = bindMiniViewTools('al-sch', () => liftView, 'soal-3-lift-15-lantai');
+
+  if (typeof MiniCircuitView === 'function' && TEMPLATES?.counter11 && TEMPLATES?.lift15) {
+    counterView = new MiniCircuitView('#ac-sch-stage', TEMPLATES.counter11, {
+      id: 'counter11',
+      onClockClick: clockCounter,
+      onZoomChange: onCounterZoom
+    });
+    liftView = new MiniCircuitView('#al-sch-stage', TEMPLATES.lift15, {
+      id: 'lift15',
+      onClockClick: clockLift,
+      onSwitchClick: (key) => {
+        if (key === 'SW_X') { lift.X = !lift.X; renderLift(); }
+        else if (key === 'SW_P') { lift.P = !lift.P; renderLift(); }
+      },
+      onZoomChange: onLiftZoom
+    });
+  }
+
+  q('#ac-sch-clock')?.addEventListener('click', clockCounter);
+  q('#al-sch-clock')?.addEventListener('click', clockLift);
+  q('#ac-sch-edit')?.addEventListener('click', () => {
+    openMakerWithPreset('counter11', {
+      ffStates: { FFA: counter.state.A, FFB: counter.state.B, FFC: counter.state.C, FFD: counter.state.D }
+    });
+  });
+  q('#al-sch-edit')?.addEventListener('click', () => {
+    openMakerWithPreset('lift15', {
+      ffStates: { FFA: !!(lift.floor & 8), FFB: !!(lift.floor & 4), FFC: !!(lift.floor & 2), FFD: !!(lift.floor & 1) },
+      switches: { SW_X: lift.X, SW_P: lift.P }
+    });
+  });
+
+  const syncCounterSchematic = () => {
+    if (!counterView) return;
+    counterView.syncState({
+      ffStates: { FFA: counter.state.A, FFB: counter.state.B, FFC: counter.state.C, FFD: counter.state.D }
+    });
+    const v = toVal(counter.state);
+    const { I } = counterStep(counter.state);
+    const meta = q('#ac-sch-meta');
+    if (meta) {
+      meta.innerHTML = `<span class="asg-circuit-badge"><i></i>Q = ${bin4(v)} (${v})</span>`
+        + `<span>J/K aktif: A=${bit(I.JA)}${bit(I.KA)} B=${bit(I.JB)}${bit(I.KB)} C=${bit(I.JC)}${bit(I.KC)} D=${bit(I.JD)}${bit(I.KD)}</span>`
+        + `<span>${counterView.st.components.length} komponen · ${counterView.st.wires.length} kabel</span>`;
+    }
+  };
+  const syncLiftSchematic = () => {
+    if (!liftView) return;
+    liftView.syncState({
+      ffStates: { FFA: !!(lift.floor & 8), FFB: !!(lift.floor & 4), FFC: !!(lift.floor & 2), FFD: !!(lift.floor & 1) },
+      switches: { SW_X: lift.X, SW_P: lift.P }
+    });
+    const muxCh = (lift.X ? 2 : 0) | (lift.P ? 1 : 0);
+    const modeName = lift.X ? (lift.P ? 'Naik 3' : 'Naik 1') : (lift.P ? 'Turun 3' : 'Turun 1');
+    const meta = q('#al-sch-meta');
+    if (meta) {
+      meta.innerHTML = `<span class="asg-circuit-badge"><i></i>Lantai ${lift.floor} (${bin4(lift.floor)})</span>`
+        + `<span>MUX 4:1 memilih saluran I${muxCh} (${modeName}, S1=${bit(lift.X)}, S0=${bit(lift.P)})</span>`
+        + `<span>${liftView.st.components.length} komponen · ${liftView.st.wires.length} kabel</span>`;
+    }
+  };
+
+  /* ---------------- Sirkuit Maker Tertanam ---------------- */
+  function syncMakerHeader() {
+    const mt = q('#asg-maker-title');
+    if (mt) mt.value = S.title;
+    updateHistoryButtons();
+  }
+  function mountMakerWorkbench(presetKey = null, presetOpts = null) {
+    if (!makerSlotEl || !workbenchEl) return;
+    if (workbenchEl.parentElement !== makerSlotEl) {
+      makerSlotEl.appendChild(workbenchEl);
+      if (drawerBackdropEl) q('#asg-maker-shell')?.appendChild(drawerBackdropEl);
+    }
+    document.body.classList.add('assign-maker-open');
+    asgMainEl?.classList.add('maker-active');
+    if (presetKey) {
+      loadTemplate(presetKey, { ...(presetOpts || {}), silent: false });
+    } else if (!S.components.length || (S.title === 'Half Adder' && history.undo.length === 0 && S.ticks === 0)) {
+      loadTemplate('counter11', { noCheckpoint: true, silent: true });
+    }
+    syncMakerHeader();
+    requestAnimationFrame(() => {
+      fitView();
+      renderAll();
+    });
+  }
+  function unmountMakerWorkbench() {
+    if (!workbenchEl || workbenchEl.parentElement === appEl) return;
+    stopRunning(true);
+    closeMenus();
+    closeDrawers();
+    cancelWiring();
+    document.body.classList.remove('assign-maker-open');
+    asgMainEl?.classList.remove('maker-active');
+    if (topbarEl && topbarEl.nextSibling) appEl.insertBefore(workbenchEl, topbarEl.nextSibling);
+    else appEl.appendChild(workbenchEl);
+    if (drawerBackdropEl) appEl.appendChild(drawerBackdropEl);
+  }
+  function openMakerWithPreset(key, opts = {}) {
+    switchTab('maker', true);
+    mountMakerWorkbench(key, opts);
+  }
+
+  qa('[data-maker-preset]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.makerPreset;
+      if (key === 'empty') newScene();
+      else loadTemplate(key);
+      syncMakerHeader();
+    });
+  });
+  q('#asg-maker-title')?.addEventListener('input', (e) => {
+    S.title = e.target.value;
+    q('#circuit-title').value = S.title;
+    markDirty();
+  });
+  q('#asg-maker-title')?.addEventListener('blur', () => {
+    if (!S.title.trim()) {
+      S.title = 'Rangkaian Tanpa Judul';
+      q('#circuit-title').value = S.title;
+      q('#asg-maker-title').value = S.title;
+    }
+  });
+  q('#asg-maker-undo')?.addEventListener('click', doUndo);
+  q('#asg-maker-redo')?.addEventListener('click', doRedo);
+  q('#asg-maker-open')?.addEventListener('click', () => q('#file-open').click());
+  q('#asg-maker-save')?.addEventListener('click', downloadJSON);
+  q('#asg-maker-svg')?.addEventListener('click', exportSVG);
+  q('#asg-maker-png')?.addEventListener('click', exportPNG);
+  q('#asg-maker-help')?.addEventListener('click', openHelp);
+
+  /* Hook renderCounter & renderLift agar skema selalu sinkron */
+  const _baseVerify = runVerify;
+  function runFullVerify() {
+    _baseVerify();
+    if (typeof createCircuitState !== 'function' || typeof pulseCircuitClock !== 'function') return;
+    // Uji netlist gerbang logika Soal 2
+    let netCounterOk = 0;
+    const cSt = createCircuitState(TEMPLATES.counter11);
+    const cFF = ['FFA', 'FFB', 'FFC', 'FFD'].map((k) => cSt.components.find((c) => c._key === k));
+    const setCState = (v) => {
+      cFF.forEach((ff, idx) => { ff.q = (v >> (3 - idx)) & 1; ff._prevClk = false; });
+      for (const c of cSt.components) if (c.type === 'clock') c.on = false;
+      simulateCircuit(cSt);
+    };
+    const readCState = () => cFF.reduce((acc, ff, idx) => acc | ((ff.q ? 1 : 0) << (3 - idx)), 0);
+    for (let v = 0; v <= 10; v++) {
+      setCState(v);
+      pulseCircuitClock(cSt);
+      if (readCState() === EXPECTED[v] && !cSt.unstable) netCounterOk++;
+    }
+    let netRecOk = 0;
+    for (let v = 11; v <= 15; v++) {
+      setCState(v);
+      let n = 0;
+      while (n < 10 && readCState() > 10) { pulseCircuitClock(cSt); n++; }
+      if (n <= 3 && readCState() <= 10 && !cSt.unstable) netRecOk++;
+    }
+    const cNote = q('#av-counter-note');
+    if (cNote) {
+      cNote.innerHTML += ` <span class="asg-pill-status" style="margin-left:6px">Netlist gerbang: ${netCounterOk}/11 · pemulihan ${netRecOk}/5</span>`;
+    }
+
+    // Uji netlist gerbang + MUX 4:1 Soal 3
+    let netLiftOk = 0;
+    const lSt = createCircuitState(TEMPLATES.lift15);
+    const lFF = ['FFA', 'FFB', 'FFC', 'FFD'].map((k) => lSt.components.find((c) => c._key === k));
+    const swX = lSt.components.find((c) => c._key === 'SW_X');
+    const swP = lSt.components.find((c) => c._key === 'SW_P');
+    const readLState = () => lFF.reduce((acc, ff, idx) => acc | ((ff.q ? 1 : 0) << (3 - idx)), 0);
+    for (let f = 1; f <= 15; f++) {
+      for (const m of MODES) {
+        lFF.forEach((ff, idx) => { ff.q = (f >> (3 - idx)) & 1; ff._prevClk = false; });
+        for (const c of lSt.components) if (c.type === 'clock') c.on = false;
+        swX.on = m.X; swP.on = m.P;
+        simulateCircuit(lSt);
+        pulseCircuitClock(lSt);
+        if (readLState() === liftTarget(f, m.X, m.P) && !lSt.unstable) netLiftOk++;
+      }
+    }
+    const lNote = q('#av-lift-note');
+    if (lNote) {
+      lNote.innerHTML = `Persamaan D<sub>A</sub>…D<sub>D</sub> tiap mode diuji terhadap aturan min/max. <span class="asg-pill-status" style="margin-left:6px">Netlist 37 gerbang + 4 MUX: ${netLiftOk}/60</span>`;
+    }
+  }
+  q('#av-run').removeEventListener('click', runVerify);
+  q('#av-run').addEventListener('click', runFullVerify);
+
+  /* ---------------- Navigasi, buka/tutup ---------------- */
+  function switchTab(name, resetScroll = true) {
+    activeTab = name;
+    qa('[data-asg-tab]').forEach((b) => {
+      const on = b.dataset.asgTab === name;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    qa('[data-asg-panel]').forEach((p) => p.classList.toggle('active', p.dataset.asgPanel === name));
+    if (name !== 'counter') stopCounterAuto();
+    if (name !== 'lift') stopLiftAuto();
+    if (name === 'maker') {
+      mountMakerWorkbench();
+    } else {
+      unmountMakerWorkbench();
+    }
+    if (name === 'counter') requestAnimationFrame(() => counterView?.fitView());
+    if (name === 'lift') requestAnimationFrame(() => liftView?.fitView());
+    if (resetScroll) {
+      const panel = q(`[data-asg-panel="${name}"]`);
+      if (panel) {
+        const bar = q('.asg-bar');
+        let top = 0;
+        let el = panel;
+        while (el && el !== view) { top += el.offsetTop; el = el.offsetParent; }
+        view.scrollTop = Math.max(0, top - bar.offsetHeight - 16);
+      } else {
+        view.scrollTop = 0;
+      }
+    } else {
+      view.scrollTop = 0;
+    }
+  }
+  qa('[data-asg-tab]').forEach((b) => b.addEventListener('click', () => switchTab(b.dataset.asgTab)));
+
   function openAssign(tab = 'counter') {
     view.hidden = false;
     view.classList.add('open');
@@ -4005,6 +5121,7 @@ init();
   function closeAssign() {
     stopCounterAuto();
     stopLiftAuto();
+    unmountMakerWorkbench();
     view.classList.remove('open');
     view.setAttribute('aria-hidden', 'true');
     view.hidden = true;
@@ -4012,12 +5129,23 @@ init();
     if (appEl) appEl.inert = false;
     q('#btn-assign').setAttribute('aria-expanded', 'false');
     q('#btn-assign').focus();
+    requestAnimationFrame(() => {
+      applyViewport();
+      renderAll();
+    });
   }
   q('#btn-assign').addEventListener('click', () => openAssign('counter'));
   q('#asg-back').addEventListener('click', closeAssign);
   document.addEventListener('keydown', (e) => {
     if (!view.classList.contains('open')) return;
     if (e.key === 'Escape') {
+      if (document.body.classList.contains('assign-maker-open')) {
+        const active = document.activeElement;
+        const typing = active && (/^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName) || active.isContentEditable);
+        if (q('#help-modal.open') || q('.menu.open') || q('.drawer-open') || typing || wiring || inter || S.selection.size) {
+          return;
+        }
+      }
       e.preventDefault();
       closeAssign();
     }
@@ -4026,8 +5154,16 @@ init();
   /* ---------------- Mulai ---------------- */
   buildFloors();
   renderCounter();
+  syncCounterSchematic();
   renderLift();
-  runVerify();
+  syncLiftSchematic();
+  runFullVerify();
+
+  // Sinkronkan skema setiap kali tombol kontrol Soal 2 / Soal 3 dijalankan
+  const obsCounter = new MutationObserver(syncCounterSchematic);
+  obsCounter.observe(q('#ac-note'), { childList: true, characterData: true, subtree: true });
+  const obsLift = new MutationObserver(syncLiftSchematic);
+  obsLift.observe(q('#al-next'), { childList: true, characterData: true, subtree: true });
 })();
 </script>
 </body>
